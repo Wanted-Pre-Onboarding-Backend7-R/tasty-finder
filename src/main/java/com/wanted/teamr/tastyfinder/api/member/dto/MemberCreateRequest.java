@@ -10,7 +10,7 @@ import lombok.Getter;
 public class MemberCreateRequest {
 
     @NotBlank
-    @Email
+    @Email(regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     private String email;
 
     @NotBlank
