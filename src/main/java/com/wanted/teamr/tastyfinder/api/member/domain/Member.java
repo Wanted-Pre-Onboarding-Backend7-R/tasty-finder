@@ -3,6 +3,7 @@ package com.wanted.teamr.tastyfinder.api.member.domain;
 import static com.wanted.teamr.tastyfinder.api.member.domain.Role.ROLE_USER;
 
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
+import com.wanted.teamr.tastyfinder.api.member.dto.MemberUpdateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,12 +32,12 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    private Float latitude; //위도
+    private BigDecimal latitude; //위도
 
-    private Float longitude; //경도
+    private BigDecimal longitude; //경도
 
     @Column(nullable = false)
-    private boolean isRecommendEnabled;
+    private Boolean isRecommendEnabled = false; //추천 사용 여부
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
@@ -45,7 +47,7 @@ public class Member {
     }
 
     @Builder
-    private Member(String email, String password, Float latitude, Float longitude, Boolean isRecommendEnabled, Role role) {
+    private Member(String email, String password, BigDecimal latitude, BigDecimal longitude, Boolean isRecommendEnabled) {
         this.email = email;
         this.password = password;
         this.latitude = latitude;
@@ -60,5 +62,29 @@ public class Member {
                 .email(memberCreateRequest.getEmail())
                 .password(encodePassword)
                 .build();
+    }
+
+    public void update(MemberUpdateRequest memberUpdateRequest) {
+        updateLatitude(memberUpdateRequest.getLatitude());
+        updateLongitude(memberUpdateRequest.getLongitude());
+        updateIsRecommendEnabled(memberUpdateRequest.getIsRecommendEnabled());
+    }
+
+    private void updateLatitude(BigDecimal latitude) {
+        if (latitude != null) {
+            this.latitude = latitude;
+        }
+    }
+
+    private void updateLongitude(BigDecimal longitude) {
+        if (longitude != null) {
+            this.longitude = longitude;
+        }
+    }
+
+    private void updateIsRecommendEnabled(Boolean isRecommendEnabled) {
+        if (isRecommendEnabled != null) {
+            this.isRecommendEnabled = isRecommendEnabled;
+        }
     }
 }
