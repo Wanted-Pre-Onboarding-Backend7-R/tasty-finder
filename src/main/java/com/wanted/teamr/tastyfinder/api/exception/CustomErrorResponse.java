@@ -20,6 +20,14 @@ public class CustomErrorResponse {
                 .code(errorCode.name())
                 .message(errorCode.getMessage())
                 .build();
+
+    private final String errorCode;
+    private final String message;
+
+    public CustomErrorResponse(ErrorCodeType errorCodeType) {
+        errorCode = errorCodeType.name();
+        message = errorCodeType.getMessage();
+
     }
 
 }
