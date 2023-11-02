@@ -30,8 +30,8 @@ public class JwtTokenProvider {
     private final long expirationTimeMillis;
     private final Key key;
 
-    public JwtTokenProvider(@Value("${security.jwt.token.secret-key}") final String secretKey,
-                            @Value("${security.jwt.token.expire-period}") final Long expirationTimeMillis) {
+    public JwtTokenProvider(@Value("${security.jwt.secret-key}") final String secretKey,
+                            @Value("${security.jwt.expire-period}") final Long expirationTimeMillis) {
         byte[] secretByteKey = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(secretByteKey);
         this.expirationTimeMillis = expirationTimeMillis;
@@ -54,11 +54,11 @@ public class JwtTokenProvider {
                     .build()
                     .parseClaimsJws(token).getBody();
         } catch (SecurityException | MalformedJwtException e) {
-            throw new CustomException(AUTH_JWT_TOKEN_INVALID, e);
+            throw new CustomException(AUTH_JWT_INVALID, e);
         } catch (ExpiredJwtException e) {
-            throw new CustomException(AUTH_JWT_TOKEN_EXPIRED, e);
+            throw new CustomException(AUTH_JWT_EXPIRED, e);
         } catch (UnsupportedJwtException e) {
-            throw new CustomException(AUTH_JWT_TOKEN_UNSUPPORTED, e);
+            throw new CustomException(AUTH_JWT_UNSUPPORTED, e);
         } catch (IllegalArgumentException e) {
             throw new CustomException(AUTH_JWT_CLAIMS_EMPTY, e);
         }

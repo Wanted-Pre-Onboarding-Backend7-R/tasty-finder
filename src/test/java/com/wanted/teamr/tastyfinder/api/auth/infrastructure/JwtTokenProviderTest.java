@@ -60,7 +60,7 @@ class JwtTokenProviderTest {
         //when
         assertThatThrownBy(() -> jwtTokenProvider.validateToken(tokenCreateResponse.getAccessToken()))
                 .isInstanceOf(CustomException.class)
-                .hasMessage(AUTH_JWT_TOKEN_EXPIRED.getMessage());
+                .hasMessage(AUTH_JWT_EXPIRED.getMessage());
     }
 
     @Test
@@ -73,7 +73,7 @@ class JwtTokenProviderTest {
         //when
         assertThatThrownBy(() -> jwtTokenProvider.validateToken(tokenCreateResponse.getRefreshToken()))
                 .isInstanceOf(CustomException.class)
-                .hasMessage(AUTH_JWT_TOKEN_EXPIRED.getMessage());
+                .hasMessage(AUTH_JWT_EXPIRED.getMessage());
     }
 
     /**

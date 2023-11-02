@@ -2,7 +2,7 @@ package com.wanted.teamr.tastyfinder.api.auth.infrastructure;
 
 import static com.wanted.teamr.tastyfinder.api.auth.infrastructure.JwtTokenProvider.CLAIMS_AUTH;
 import static com.wanted.teamr.tastyfinder.api.auth.infrastructure.JwtTokenProvider.GRANTTYPE_BEARER;
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_JWT_TOKEN_UNPRIVILEGED;
+import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_JWT_UNPRIVILEGED;
 
 import com.wanted.teamr.tastyfinder.api.exception.CustomException;
 import io.jsonwebtoken.Claims;
@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private Authentication getAuthentication(String accessToken) {
         Claims claims = jwtTokenProvider.parseClaims(accessToken);
         if (claims.get(CLAIMS_AUTH) == null) {
-            throw new CustomException(AUTH_JWT_TOKEN_UNPRIVILEGED);
+            throw new CustomException(AUTH_JWT_UNPRIVILEGED);
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, accessToken, userDetails.getAuthorities());

@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode implements ErrorCodeType {
 
-    AUTH_JWT_TOKEN_INVALID("Invalid JWT Token", FORBIDDEN),
-    AUTH_JWT_TOKEN_EXPIRED("Expired JWT Token", FORBIDDEN),
     AUTH_JWT_CLAIMS_EMPTY("JWT claims string is empty.", FORBIDDEN),
-    AUTH_JWT_TOKEN_UNPRIVILEGED("Unprivileged JWT Token", FORBIDDEN),
-    AUTH_JWT_TOKEN_UNSUPPORTED("Unsupported JWT Token", FORBIDDEN),
+    AUTH_JWT_EXPIRED("Expired JWT Token", FORBIDDEN),
+    AUTH_JWT_INVALID("Invalid JWT Token", FORBIDDEN),
+    AUTH_JWT_UNPRIVILEGED("Unprivileged JWT Token", FORBIDDEN),
+    AUTH_JWT_UNSUPPORTED("Unsupported JWT Token", FORBIDDEN),
 
     MEMBER_NOT_EXISTS("존재하지 않는 사용자입니다.", FORBIDDEN)
     ;
