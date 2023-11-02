@@ -67,7 +67,6 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberCreateRequest))
                 )
                 .andDo(print())
-                //TODO: exception 처리 수정
                 .andExpect(status().isBadRequest());
     }
 
@@ -87,7 +86,6 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberCreateRequest))
                 )
                 .andDo(print())
-                //TODO: exception 처리 수정
                 .andExpect(status().isBadRequest());
     }
 
@@ -107,7 +105,6 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberCreateRequest))
                 )
                 .andDo(print())
-                //TODO: exception 처리 수정
                 .andExpect(status().isBadRequest());
     }
 }
