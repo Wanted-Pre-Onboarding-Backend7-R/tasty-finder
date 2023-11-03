@@ -11,7 +11,6 @@ import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberUpdateRequest;
 import com.wanted.teamr.tastyfinder.api.member.repository.MemberRepository;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,8 +140,8 @@ class MemberControllerTest {
     void updateMember() throws Exception {
         //given
         MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.builder()
-                .latitude(new BigDecimal("35.1111"))
-                .longitude(new BigDecimal("125.1111"))
+                .latitude("35.1111")
+                .longitude("125.1111")
                 .isRecommendEnabled(true)
                 .build();
 
@@ -161,8 +160,8 @@ class MemberControllerTest {
     void updateMember_invalidLatitude() throws Exception {
         //given
         MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.builder()
-                .latitude(new BigDecimal("100"))
-                .longitude(new BigDecimal("125.1111"))
+                .latitude("38.62")
+                .longitude("125.1111")
                 .build();
 
         //when then
@@ -180,8 +179,8 @@ class MemberControllerTest {
     void updateMember_invalidLongitude() throws Exception {
         //given
         MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.builder()
-                .latitude(new BigDecimal("35.1111"))
-                .longitude(new BigDecimal("200.1111"))
+                .latitude("35.1111")
+                .longitude("200.1111")
                 .build();
 
         //when then

@@ -12,10 +12,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
-import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 
 @Getter
 @Entity
@@ -32,9 +32,9 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    private BigDecimal latitude; //위도
+    private String latitude; //위도
 
-    private BigDecimal longitude; //경도
+    private String longitude; //경도
 
     @Column(nullable = false)
     private Boolean isRecommendEnabled = false; //추천 사용 여부
@@ -47,7 +47,7 @@ public class Member {
     }
 
     @Builder
-    private Member(String email, String password, BigDecimal latitude, BigDecimal longitude, Boolean isRecommendEnabled) {
+    private Member(String email, String password, String latitude, String longitude, Boolean isRecommendEnabled) {
         this.email = email;
         this.password = password;
         this.latitude = latitude;
@@ -70,14 +70,14 @@ public class Member {
         updateIsRecommendEnabled(memberUpdateRequest.getIsRecommendEnabled());
     }
 
-    private void updateLatitude(BigDecimal latitude) {
-        if (latitude != null) {
+    private void updateLatitude(String latitude) {
+        if (StringUtils.hasText(latitude)) {
             this.latitude = latitude;
         }
     }
 
-    private void updateLongitude(BigDecimal longitude) {
-        if (longitude != null) {
+    private void updateLongitude(String longitude) {
+        if (StringUtils.hasText(longitude)) {
             this.longitude = longitude;
         }
     }

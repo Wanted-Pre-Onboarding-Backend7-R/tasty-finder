@@ -8,7 +8,6 @@ import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberUpdateRequest;
 import com.wanted.teamr.tastyfinder.api.member.repository.MemberRepository;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,8 +64,8 @@ class MemberServiceTest {
     @DisplayName("사용자 정보를 수정할 수 있다.")
     void updateMember() {
         //given
-        BigDecimal latitude = new BigDecimal("35.1111");
-        BigDecimal longitude = new BigDecimal("125.1111");
+        String latitude = "35.1111";
+        String longitude = "125.1111";
         Boolean isRecommendEnabled = false;
         MemberUpdateRequest memberUpdateRequest = MemberUpdateRequest.builder()
                 .latitude(latitude)
