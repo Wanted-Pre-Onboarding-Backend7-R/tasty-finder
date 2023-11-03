@@ -3,8 +3,6 @@ package com.wanted.teamr.tastyfinder.datapipelining.domain;
 import com.wanted.teamr.tastyfinder.datapipelining.dto.OpenAPIStoreRow;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -18,13 +16,12 @@ import java.time.LocalDateTime;
 public class MatzipRaw {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "BIZ_NM_LOTNO_ADDR", length = 200, nullable = false, unique = true)
+    @Column(name = "BIZ_NM_LOTNO_ADDR", length = 200, nullable = false, updatable = false, unique = true)
     private String bizNameLotNoAddr;
-    @CreatedDate
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @LastModifiedDate
     private LocalDateTime updatedAt;
     @Column(name = "SIGUN_NM", length = 10, nullable = false)
     private String sigunNm;
@@ -62,7 +59,7 @@ public class MatzipRaw {
     private String sanittnBizcondNm;
     @Column(name = "TOT_EMPLY_CNT")
     private Integer totEmplyCnt;
-    @Column(name = "REFINE_LOTNO_ADDR", length = 120, nullable = false)
+    @Column(name = "REFINE_LOTNO_ADDR", length = 120, updatable = false, nullable = false)
     private String refineLotnoAddr;
     @Column(name = "REFINE_ROADNM_ADDR", length = 200)
     private String refineRoadnmAddr;
