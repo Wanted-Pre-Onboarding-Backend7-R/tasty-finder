@@ -47,7 +47,7 @@ public class Member {
     }
 
     @Builder
-    private Member(String email, String password, String latitude, String longitude, Boolean isRecommendEnabled) {
+    private Member(String email, String password, String latitude, String longitude, Boolean isRecommendEnabled, Role role) {
         this.email = email;
         this.password = password;
         this.latitude = latitude;
