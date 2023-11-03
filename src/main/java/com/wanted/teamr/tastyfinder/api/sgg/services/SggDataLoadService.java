@@ -24,11 +24,18 @@ public class SggDataLoadService {
      * @throws IOException CSV 파일 발견하지 못하였거나 CSV 파일을 읽는데 문제가 있을 때 발생
      */
     public void loadDataFromCSV() throws IOException {
+        File file = getFile();
+        List<SggData> sggDataList = getSggData(file);
+        sggDataService.saveAll(sggDataList);
+    }
 
+    private File getFile() throws IOException {
         String classPath = "data/sgg_lat_lon.csv";
         ClassPathResource classPathResource = new ClassPathResource(classPath);
-        File file = classPathResource.getFile();
+        return classPathResource.getFile();
+    }
 
+    private List<SggData> getSggData(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line;
         List<SggData> sggDataList = new ArrayList<>();
@@ -44,7 +51,7 @@ public class SggDataLoadService {
             }
         }
         reader.close();
-        sggDataService.saveAll(sggDataList);
+        return sggDataList;
     }
 
 }
