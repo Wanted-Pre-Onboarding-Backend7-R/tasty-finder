@@ -28,5 +28,5 @@ logging:
 
 security:
   jwt:
-    secret-key: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXdhbnRlZC1wcmUtb25ib2FyZGluZy1iYWNrZW5kLWludGVybnNoaXAtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXkK
+    secret-key:
     expire-period: 3600000
