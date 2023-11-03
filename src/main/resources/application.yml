@@ -19,7 +19,8 @@ spring:
 #    init:
 #      mode: always
 #      data-locations: classpath:db/data.sql
-#  config:
+  config:
+    import: private/application-private.yml
 #    import: external-api-config.yml
 
 logging:
