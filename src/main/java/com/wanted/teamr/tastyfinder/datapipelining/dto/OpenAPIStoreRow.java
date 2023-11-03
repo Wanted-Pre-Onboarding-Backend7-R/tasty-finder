@@ -1,36 +1,12 @@
 package com.wanted.teamr.tastyfinder.datapipelining.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.annotation.Generated;
 import lombok.Data;
 
 @Data
-@JsonPropertyOrder({
-        "SIGUN_NM",
-        "SIGUN_CD",
-        "BIZPLC_NM",
-        "LICENSG_DE",
-        "BSN_STATE_NM",
-        "CLSBIZ_DE",
-        "LOCPLC_AR",
-        "GRAD_FACLT_DIV_NM",
-        "MALE_ENFLPSN_CNT",
-        "YY",
-        "MULTI_USE_BIZESTBL_YN",
-        "GRAD_DIV_NM",
-        "TOT_FACLT_SCALE",
-        "FEMALE_ENFLPSN_CNT",
-        "BSNSITE_CIRCUMFR_DIV_NM",
-        "SANITTN_INDUTYPE_NM",
-        "SANITTN_BIZCOND_NM",
-        "TOT_EMPLY_CNT",
-        "REFINE_LOTNO_ADDR",
-        "REFINE_ROADNM_ADDR",
-        "REFINE_ZIP_CD",
-        "REFINE_WGS84_LOGT",
-        "REFINE_WGS84_LAT"
-})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("jsonschema2pojo")
 public class OpenAPIStoreRow {
 
