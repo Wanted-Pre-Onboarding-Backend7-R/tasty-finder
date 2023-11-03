@@ -15,3 +15,8 @@ spring:
 
 #jwt:
 #  secret: {jwt_key}
+
+security:
+  jwt:
+    secret-key:
+    expire-period: 3600000
