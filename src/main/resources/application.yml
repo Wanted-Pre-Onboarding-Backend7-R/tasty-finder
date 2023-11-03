@@ -19,8 +19,9 @@ spring:
 #    init:
 #      mode: always
 #      data-locations: classpath:db/data.sql
-#  config:
-#    import: external-api-config.yml
+  config:
+    import:
+      - redis.yml
 
 logging:
   level:
