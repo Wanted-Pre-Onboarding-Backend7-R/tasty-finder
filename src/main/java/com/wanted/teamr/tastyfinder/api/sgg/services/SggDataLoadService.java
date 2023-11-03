@@ -18,6 +18,11 @@ public class SggDataLoadService {
 
     private final SggDataService sggDataService;
 
+    /**
+     * csv 파일로부터 SggData 리스트를 작성하고 Redis에 적재.
+     *
+     * @throws IOException CSV 파일 발견하지 못하였거나 CSV 파일을 읽는데 문제가 있을 때 발생
+     */
     public void loadDataFromCSV() throws IOException {
 
         String classPath = "data/sgg_lat_lon.csv";

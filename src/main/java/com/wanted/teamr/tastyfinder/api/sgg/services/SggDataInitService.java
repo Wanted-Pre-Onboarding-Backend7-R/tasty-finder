@@ -12,6 +12,12 @@ public class SggDataInitService {
 
     private final SggDataLoadService sggDataLoadService;
 
+    /**
+     * 서버가 시작될 때 CSV 파일을 읽고 Redis에 적재하는 서비스 호출.
+     * 만약 그 과정에서 IOException이 발생하면 서버 시작을 실패하게 하도록 IOException 을 던진다.
+     *
+     * @throws IOException
+     */
     @PostConstruct
     public void loadSggDataOnStartup() throws IOException {
         sggDataLoadService.loadDataFromCSV();
