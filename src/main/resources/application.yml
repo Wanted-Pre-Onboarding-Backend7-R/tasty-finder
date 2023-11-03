@@ -15,17 +15,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
 #  sql:
 #    init:
 #      mode: always
 #      data-locations: classpath:db/data.sql
   config:
-    import: private/application-private.yml
+    import:
+      - private/application-private.yml
 #    import: external-api-config.yml
 
 logging:
   level:
-    sql: trace
+    org.springframework.jdbc.core: info
 
 #jwt:
 #  secret: {jwt_key}
