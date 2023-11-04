@@ -1,7 +1,7 @@
 package com.wanted.teamr.tastyfinder.api.exception;
 
-import static org.springframework.http.HttpStatus.*;
 
+import static org.springframework.http.HttpStatus.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -29,8 +29,11 @@ public enum ErrorCode {
     MEMBER_PASSWORD_EMPTY("비밀번호가 없습니다.", BAD_REQUEST),
     MEMBER_LATITUDE_INVALID("잘못된 위도입니다.", BAD_REQUEST),
     MEMBER_LONGITUDE_INVALID("잘못된 경도입니다.", BAD_REQUEST),
+
+    NOT_FOUND_ERROR_CODE("대응하는 에러코드가 존재하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR)
     ;
 
     private final String message;
     private final HttpStatus httpStatus;
+
 }
