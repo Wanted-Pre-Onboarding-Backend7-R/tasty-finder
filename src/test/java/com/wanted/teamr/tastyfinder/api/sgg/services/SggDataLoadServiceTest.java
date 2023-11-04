@@ -29,7 +29,7 @@ class SggDataLoadServiceTest {
         sggDataRepository.deleteAll();
     }
 
-    @DisplayName("지정된 csv 파일로부터 정보를 읽고 Redis의 SggData를 교체한다..")
+    @DisplayName("지정된 csv 파일로부터 정보를 읽고 Redis의 시군구 데이터를 교체한다..")
     @Test
     void csvExists_thenReplacesSggDataInRedis() throws IOException {
         // given

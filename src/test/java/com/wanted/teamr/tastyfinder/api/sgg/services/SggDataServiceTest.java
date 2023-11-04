@@ -28,7 +28,7 @@ class SggDataServiceTest {
         sggDataRepository.deleteAll();
     }
 
-    @DisplayName("sggDataService::replaceAll은 저장된 SggData를 입력받은 SggData 교체해야 한다.")
+    @DisplayName("sggDataService::replaceAll은 저장된 시군구 데이터를 입력받은 시군구 데이터로 교체해야 한다.")
     @Test
     void sggDataServiceReplaceAll() {
         // given - 기존 저장된 SggData 한 건
