@@ -3,6 +3,7 @@ package com.wanted.teamr.tastyfinder.api.sgg.services;
 import com.wanted.teamr.tastyfinder.api.sgg.domain.SggData;
 import com.wanted.teamr.tastyfinder.api.sgg.repository.SggDataRepository;
 import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ class SggDataLoadServiceTest {
     SggDataLoadService sggDataLoadService;
     @Autowired
     SggDataRepository sggDataRepository;
+
+    @BeforeEach
+    void clear() {
+        sggDataRepository.deleteAll();
+    }
 
     @DisplayName("지정된 csv 파일로부터 정보를 읽고 Redis의 SggData를 교체한다..")
     @Test

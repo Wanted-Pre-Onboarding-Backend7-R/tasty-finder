@@ -25,13 +25,13 @@ public class SggData {
         this.lat = lat;
     }
 
-    public static SggData from(String dosi, String sgg, String longitude, String latitude) {
+    public static SggData from(String dosi, String sgg, String lon, String lat) {
         return SggData.builder()
                 .id(makeId(dosi, sgg))
                 .dosi(dosi)
                 .sgg(sgg)
-                .lon(longitude)
-                .lat(latitude)
+                .lon(lon)
+                .lat(lat)
                 .build();
     }
 
