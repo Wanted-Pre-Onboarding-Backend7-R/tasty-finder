@@ -9,10 +9,10 @@ import lombok.Getter;
 @Builder
 public class MemberUpdateRequest {
 
-    @Latitude
+    @Latitude(message = "MEMBER_LATITUDE_INVALID")
     private String latitude; //위도
 
-    @Longitude
+    @Longitude(message = "MEMBER_LONGITUDE_INVALID")
     private String longitude; //경도
 
     private Boolean isRecommendEnabled; //점심 추천 기능 사용 여부

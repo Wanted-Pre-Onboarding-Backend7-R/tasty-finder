@@ -1,9 +1,11 @@
 package com.wanted.teamr.tastyfinder.api.member.controller;
 
+import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -93,7 +95,8 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberCreateRequest))
                 )
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(MEMBER_EMAIL_INVALID.name()));
     }
 
     @Test
@@ -112,7 +115,8 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberCreateRequest))
                 )
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(MEMBER_EMAIL_EMPTY.name()));
     }
 
     @Test
@@ -131,7 +135,8 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberCreateRequest))
                 )
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(MEMBER_PASSWORD_EMPTY.name()));
     }
 
     @Test
@@ -170,7 +175,8 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberUpdateRequest))
                 )
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(MEMBER_LATITUDE_INVALID.name()));
     }
 
     @Test
@@ -189,7 +195,8 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(memberUpdateRequest))
                 )
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(MEMBER_LONGITUDE_INVALID.name()));
     }
 
     @Test
