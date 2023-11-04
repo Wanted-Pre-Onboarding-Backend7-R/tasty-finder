@@ -7,4 +7,5 @@ public interface ErrorCodeType {
     String name();
     String getMessage();
     HttpStatus getHttpStatus();
+
 }

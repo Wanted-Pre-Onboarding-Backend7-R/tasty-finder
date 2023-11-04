@@ -12,4 +12,5 @@ public class CustomErrorResponse {
         errorCode = errorCodeType.name();
         message = errorCodeType.getMessage();
     }
+
 }
