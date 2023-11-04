@@ -3,15 +3,13 @@ package com.wanted.teamr.tastyfinder.datapipelining.domain;
 import com.wanted.teamr.tastyfinder.datapipelining.dto.OpenAPIStoreRow;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "matzip_raw", indexes = @Index(name = "matzip_raw_BIZ_NM_LOTNO_ADDR_idx", columnList = "BIZ_NM_LOTNO_ADDR", unique = true))
-@EntityListeners(AuditingEntityListener.class)
+@Table(indexes = @Index(name = "matzip_raw_BIZ_NM_LOTNO_ADDR_idx", columnList = "BIZ_NM_LOTNO_ADDR", unique = true))
 @Entity
 public class MatzipRaw {
 
@@ -71,7 +69,12 @@ public class MatzipRaw {
     private String refineWgs84Lat;
 
     @Builder
-    private MatzipRaw(String sigunNm, String sigunCd, String bizplcNm, String licensgDe, String bsnStateNm, String clsbizDe, String locplcAr, String gradFacltDivNm, Integer maleEnflpsnCnt, String yy, String multiUseBizestblYn, String gradDivNm, String totFacltScale, Integer femaleEnflpsnCnt, String bsnsiteCircumfrDivNm, String sanittnIndutypeNm, String sanittnBizcondNm, Integer totEmplyCnt, String refineLotnoAddr, String refineRoadnmAddr, String refineZipCd, String refineWgs84Logt, String refineWgs84Lat) {
+    private MatzipRaw(String sigunNm, String sigunCd, String bizplcNm, String licensgDe, String bsnStateNm,
+                      String clsbizDe, String locplcAr, String gradFacltDivNm, Integer maleEnflpsnCnt, String yy,
+                      String multiUseBizestblYn, String gradDivNm, String totFacltScale, Integer femaleEnflpsnCnt,
+                      String bsnsiteCircumfrDivNm, String sanittnIndutypeNm, String sanittnBizcondNm,
+                      Integer totEmplyCnt, String refineLotnoAddr, String refineRoadnmAddr, String refineZipCd,
+                      String refineWgs84Logt, String refineWgs84Lat) {
         this.bizNameLotNoAddr = bizplcNm + refineLotnoAddr;
         this.sigunNm = sigunNm;
         this.sigunCd = sigunCd;

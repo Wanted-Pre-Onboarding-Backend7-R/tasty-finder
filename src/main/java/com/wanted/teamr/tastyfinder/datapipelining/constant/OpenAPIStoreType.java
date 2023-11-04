@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum OpenAPIStoreType {
 
-    CAFE (OpenAPIKey.CAFE, "Genrestrtcate"),
+    CAFE(OpenAPIKey.CAFE, "Genrestrtcate"),
     JAPANESE_FOOD(OpenAPIKey.JAPANESE_FOOD, "Genrestrtjpnfood"),
     CHINESE_FOOD(OpenAPIKey.CHINESE_FOOD, "Genrestrtchifood"),
     ;

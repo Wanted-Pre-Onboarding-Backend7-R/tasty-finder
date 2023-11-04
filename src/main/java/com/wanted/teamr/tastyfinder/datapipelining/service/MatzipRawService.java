@@ -50,7 +50,8 @@ public class MatzipRawService {
                 String url = urlFormatted.formatted(type.getDomain(), type.getKey(), pageIndex);
                 String body = restTemplate.getForObject(url, String.class);
                 OpenAPIStoreResponse openAPIResponse = mapper.readValue(body, OpenAPIStoreResponse.class);
-//                OpenAPIStoreResponse openAPIResponse = restTemplate.getForObject(url, OpenAPIStoreResponse.class); // 500 Internal Server Error
+                // 500 Internal Server Error
+//                OpenAPIStoreResponse openAPIResponse = restTemplate.getForObject(url, OpenAPIStoreResponse.class);
                 if (Objects.requireNonNull(openAPIResponse).getResult() != null) {
                     break;
                 }
