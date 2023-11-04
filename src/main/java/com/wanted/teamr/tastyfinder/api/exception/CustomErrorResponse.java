@@ -14,4 +14,11 @@ public class CustomErrorResponse {
         this.code = code;
         this.message = message;
     }
+
+    public static CustomErrorResponse of(ErrorCode errorCode) {
+        return CustomErrorResponse.builder()
+                .code(errorCode.name())
+                .message(errorCode.getMessage())
+                .build();
+    }
 }

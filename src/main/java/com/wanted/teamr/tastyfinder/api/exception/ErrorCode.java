@@ -12,6 +12,8 @@ public enum ErrorCode {
 
     COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
 
+    AUTH_AUTHENTICATION_FAILED("인증에 실패하셨습니다.", UNAUTHORIZED),
+    AUTH_AUTHORIZATION_FAILED("권한이 없습니다.", FORBIDDEN),
     AUTH_JWT_CLAIMS_EMPTY("JWT claims string is empty.", FORBIDDEN),
     AUTH_JWT_EXPIRED("Expired JWT Token", FORBIDDEN),
     AUTH_JWT_INVALID("Invalid JWT Token", FORBIDDEN),

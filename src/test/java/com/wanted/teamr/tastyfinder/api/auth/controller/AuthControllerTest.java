@@ -100,7 +100,8 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value(AUTH_AUTHENTICATION_FAILED.name()));
     }
 
     @Test
