@@ -5,6 +5,14 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+/**
+ * 시군구 데이터
+ * id: 도시명:시군구
+ * dosi: 도시명
+ * sgg: 시군구
+ * lon: longitude
+ * lat: latitude
+ */
 @Getter
 @RedisHash("SggData")
 public class SggData {

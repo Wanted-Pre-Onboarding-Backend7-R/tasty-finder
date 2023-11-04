@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 시군구 데이타 적재 서비스
+ */
 @Service
 @RequiredArgsConstructor
 public class SggDataLoadService {

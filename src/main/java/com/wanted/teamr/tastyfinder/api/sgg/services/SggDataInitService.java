@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * 서버 시작 시 시군구 데이터 적재 서비스 실행 서비스
+ */
 @Component
 @RequiredArgsConstructor
 public class SggDataInitService {
