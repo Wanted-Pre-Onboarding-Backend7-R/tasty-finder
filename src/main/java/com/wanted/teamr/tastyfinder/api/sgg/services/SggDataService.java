@@ -15,7 +15,8 @@ public class SggDataService {
     private final SggDataRepository sggDataRepository;
 
     @Transactional
-    public void saveAll(List<SggData> sggDataList) {
+    public void replaceAll(List<SggData> sggDataList) {
+        sggDataRepository.deleteAll();
         sggDataRepository.saveAll(sggDataList);
     }
 

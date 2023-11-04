@@ -22,6 +22,7 @@ spring:
   config:
     import:
       - redis.yml
+      - sgg-csv-config.yml
 
 logging:
   level:

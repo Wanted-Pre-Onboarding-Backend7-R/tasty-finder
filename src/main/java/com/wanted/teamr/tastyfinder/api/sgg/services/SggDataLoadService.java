@@ -19,27 +19,31 @@ public class SggDataLoadService {
     private final SggDataService sggDataService;
 
     /**
-     * csv 파일로부터 SggData 리스트를 작성하고 Redis에 적재.
+     * csv 파일로부터 SggData 리스트를 작성하고 Redis의 SggData를 교체
      *
      * @throws IOException CSV 파일 발견하지 못하였거나 CSV 파일을 읽는데 문제가 있을 때 발생
      */
-    public void loadDataFromCSV() throws IOException {
-        File file = getFile();
-        List<SggData> sggDataList = getSggData(file);
-        sggDataService.saveAll(sggDataList);
+    public void replaceSggDataOnRedis(String resourcePath, boolean csvSkipFirstLine) throws IOException {
+        File file = getCsvFile(resourcePath);
+        List<SggData> sggDataList = getSggData(file, csvSkipFirstLine);
+        sggDataService.replaceAll(sggDataList);
     }
 
-    private File getFile() throws IOException {
-        String classPath = "data/sgg_lat_lon.csv";
-        ClassPathResource classPathResource = new ClassPathResource(classPath);
+    private File getCsvFile(String resourcePath) throws IOException {
+        ClassPathResource classPathResource = new ClassPathResource(resourcePath);
         return classPathResource.getFile();
     }
 
-    private List<SggData> getSggData(File file) throws IOException {
+    private List<SggData> getSggData(File file, boolean csvSkipFirstLine) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line;
         List<SggData> sggDataList = new ArrayList<>();
+        boolean skipped = false;
         while ((line = reader.readLine()) != null) {
+            if (!skipped && csvSkipFirstLine) {
+                skipped = true;
+                continue;
+            }
             String[] parts = line.split(",");
             if (parts.length == 4) {
                 String dosi = parts[0];
