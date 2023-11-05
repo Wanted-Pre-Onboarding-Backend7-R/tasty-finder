@@ -1,7 +1,9 @@
 package com.wanted.teamr.tastyfinder.api.member.controller;
 
 import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.member.domain.Role.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -10,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
+import com.wanted.teamr.tastyfinder.api.member.domain.Role;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberUpdateRequest;
 import com.wanted.teamr.tastyfinder.api.member.repository.MemberRepository;
@@ -33,9 +36,13 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 class MemberControllerTest {
 
-    private final String testEmail = "test@test.com";
-    private final String testPassword = "12345678";
     private final String requestUri = "/api/members";
+    private final String email = "test@test.com";
+    private final String password = "12345678";
+    private final String latitude = "35.11";
+    private final String longitude = "125.11";
+    private final Boolean isRecommendEnabled = true;
+    private final Role role = ROLE_ADMIN;
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,8 +58,12 @@ class MemberControllerTest {
     @BeforeEach
     void setUp() {
         Member member = Member.builder()
-                .email(testEmail)
-                .password(passwordEncoder.encode(testPassword))
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .latitude(latitude)
+                .longitude(longitude)
+                .isRecommendEnabled(isRecommendEnabled)
+                .role(role)
                 .build();
         memberId = memberRepository.save(member).getId();
     }
@@ -65,7 +76,7 @@ class MemberControllerTest {
         String email = "test1@test.com";
         MemberCreateRequest memberCreateRequest = MemberCreateRequest.builder()
                 .email(email)
-                .password(testPassword)
+                .password(password)
                 .build();
 
         //when then
@@ -85,7 +96,7 @@ class MemberControllerTest {
         //given
         MemberCreateRequest memberCreateRequest = MemberCreateRequest.builder()
                 .email("test.com")
-                .password(testPassword)
+                .password(password)
                 .build();
 
         //when then
@@ -105,7 +116,7 @@ class MemberControllerTest {
     void createMember_emptyEmail() throws Exception {
         //given
         MemberCreateRequest memberCreateRequest = MemberCreateRequest.builder()
-                .password(testPassword)
+                .password(password)
                 .build();
 
         //when then
@@ -125,7 +136,7 @@ class MemberControllerTest {
     void createMember_emptyPassword() throws Exception {
         //given
         MemberCreateRequest memberCreateRequest = MemberCreateRequest.builder()
-                .email(testEmail)
+                .email(email)
                 .build();
 
         //when then
@@ -140,7 +151,7 @@ class MemberControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = testEmail, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = email, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("사용자 정보를 수정할 수 있다.")
     void updateMember() throws Exception {
         //given
@@ -160,7 +171,7 @@ class MemberControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = testEmail, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = email, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("잘못된 위도로 사용자 정보를 수정할 수 없다.")
     void updateMember_invalidLatitude() throws Exception {
         //given
@@ -180,7 +191,7 @@ class MemberControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = testEmail, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = email, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("잘못된 경도로 사용자 정보를 수정할 수 없다.")
     void updateMember_invalidLongitude() throws Exception {
         //given
@@ -200,7 +211,7 @@ class MemberControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = testEmail, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = email, setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("잘못된 추천 사용 여부로 사용자 정보를 수정할 수 없다.")
     void updateMember_invalidIsRecommendEnabled() throws Exception {
         //given
@@ -214,5 +225,36 @@ class MemberControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithUserDetails(value = email, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @DisplayName("id로 사용자를 조회할 수 있다.")
+    void getMember() throws Exception {
+        //when then
+        mockMvc.perform(get(requestUri + "/{memberId}", memberId)
+                        .accept(APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(memberId))
+                .andExpect(jsonPath("$.email").value(email))
+                .andExpect(jsonPath("$.latitude").value(latitude))
+                .andExpect(jsonPath("$.longitude").value(longitude))
+                .andExpect(jsonPath("$.isRecommendEnabled").value(isRecommendEnabled))
+                .andExpect(jsonPath("$.role").value(role.name()));
+    }
+
+    @Test
+    @WithUserDetails(value = email, setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @DisplayName("존재하지 않는 id로 사용자를 조회할 수 없다.")
+    void getMember_invalidId() throws Exception {
+        //when then
+        mockMvc.perform(get(requestUri + "/{memberId}", 999L)
+                        .accept(APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(MEMBER_NOT_EXISTS.name()));
     }
 }

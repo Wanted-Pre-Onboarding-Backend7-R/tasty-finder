@@ -1,6 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.auth.service;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.MEMBER_NOT_EXISTS;
+import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_MEMBER_NOT_EXISTS;
 
 import com.wanted.teamr.tastyfinder.api.auth.domain.MemberAdapter;
 import com.wanted.teamr.tastyfinder.api.exception.CustomException;
@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(MEMBER_NOT_EXISTS));
+                .orElseThrow(() -> new CustomException(AUTH_MEMBER_NOT_EXISTS));
         return MemberAdapter.from(member);
     }
 }
