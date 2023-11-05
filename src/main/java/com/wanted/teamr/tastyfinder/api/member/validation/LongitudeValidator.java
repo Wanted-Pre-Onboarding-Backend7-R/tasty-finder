@@ -16,7 +16,7 @@ public class LongitudeValidator implements ConstraintValidator<Longitude, String
             return true;
         }
 
-        BigDecimal latitude = new BigDecimal(value);
-        return latitude.compareTo(LONGITUDE_MAX) <= 0 && latitude.compareTo(LONGITUDE_MIN) >= 0;
+        BigDecimal longitude = new BigDecimal(value);
+        return longitude.compareTo(LONGITUDE_MAX) <= 0 && longitude.compareTo(LONGITUDE_MIN) >= 0;
     }
 }
