@@ -28,7 +28,7 @@ class SggDataServiceTest {
         sggDataRepository.deleteAll();
     }
 
-    @DisplayName("sggDataService::replaceAll은 저장된 시군구 데이터를 입력받은 시군구 데이터로 교체해야 한다.")
+    @DisplayName("SggDataService::replaceAll은 저장된 시군구 데이터를 입력받은 시군구 데이터로 교체해야 한다.")
     @Test
     void sggDataServiceReplaceAll() {
         // given - 기존 저장된 SggData 한 건
@@ -51,4 +51,36 @@ class SggDataServiceTest {
                 .extracting("dosi")
                 .containsExactly("도시2", "도시3", "도시4");
     }
+
+    @DisplayName("SggDataService::getSggDataList는 저장된 시군구 데이터 리스트를 반환한다.")
+    @Test
+    void sggDataServiceGetDataList() {
+        // given
+        SggData sggData1 = SggData.from("도시1", "시군구1", "lon1", "lat1");
+        SggData sggData2 = SggData.from("도시2", "시군구2", "lon2", "lat2");
+        sggDataRepository.saveAll(List.of(sggData1, sggData2));
+        assertThat(sggDataRepository.findAll()).hasSize(2);
+
+        // when
+        List<SggData> sggDataList = sggDataService.getSggDataList();
+
+        // then
+        assertThat(sggDataList).hasSize(2)
+                .extracting("dosi")
+                .containsExactly("도시1", "도시2");
+    }
+
+    @DisplayName("SggDataService::getSggDataList는 저장된 시군구 데이터가 없을 경우 빈 리스트를 반환한다.")
+    @Test
+    void sggDataServiceGetDataListEmpty() {
+        // given
+        assertThat(sggDataRepository.findAll()).hasSize(0);
+
+        // when
+        List<SggData> sggDataList = sggDataService.getSggDataList();
+
+        // then
+        assertThat(sggDataList).hasSize(0);
+    }
+
 }
