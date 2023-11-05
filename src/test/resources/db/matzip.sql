@@ -1,6 +1,6 @@
 -- 37.44749167 127.1477194 시군구 성남시
 
-INSERT INTO matzip_row (BIZPLC_NM, REFINE_WGS84_LAT, REFINE_WGS84_LOGT)
+INSERT INTO temp_matzip_row (BIZPLC_NM, REFINE_WGS84_LAT, REFINE_WGS84_LOGT)
 VALUES ('맛집 1', 37.4513, 127.1485),
        ('맛집 2', 37.44812, 127.14493),
        ('맛집 3', 37.437, 127.1477194),
@@ -16,7 +16,7 @@ VALUES ('맛집 1', 37.4513, 127.1485),
 
 -- values 옆에 주석 실제 지도 거리 | app내 계산식으로 거리 계산 | 평점
 
-INSERT INTO matzip (matzip_row_id, total_rating, review_count)
+INSERT INTO matzip (temp_matzip_row_id, total_rating, review_count)
 VALUES (1, 20, 6), -- 맥도날드 성남신흥DT점 0.42180, 본래 위치 0.429 | 0.42903693506306245 | 3.33
        (2, 8, 3), -- 유명각 0.25475 | 0.2559639338965817 | 2.66
        (3, 26, 6), -- 1.17 | 1.1666204760289616 | 4.33

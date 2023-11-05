@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MatzipRow {
+public class TempMatzipRow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
