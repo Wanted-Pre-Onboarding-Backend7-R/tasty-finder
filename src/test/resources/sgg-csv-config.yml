@@ -1,0 +1,3 @@
+sggCsv:
+  csvSkipFirstLine: true
+  resourcePath: "data/sgg_lat_lon.csv"
