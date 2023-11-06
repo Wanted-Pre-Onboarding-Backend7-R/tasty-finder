@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MatzipController {
     private final MatzipService matzipService;
+  
+    @GetMapping("/api/matzips")
+    public ResponseEntity<List<MatzipSummaryReponse>> retrieveMatzipList(@ModelAttribute @Valid MatzipListRetrieveRequest request) {
+        List<MatzipSummaryReponse> response = matzipService.retrieveMatzipList(request);
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/api/matzips/{matzipId}")
     public ResponseEntity<MatzipResponse> getMatzip(@PathVariable("matzipId") Long matzipId) {
@@ -20,3 +26,4 @@ public class MatzipController {
     }
 
 }
+
