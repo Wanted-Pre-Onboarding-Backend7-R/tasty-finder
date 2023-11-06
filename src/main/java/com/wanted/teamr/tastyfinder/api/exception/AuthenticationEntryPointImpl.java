@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.server.Encoding;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,10 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public void commence(HttpServletRequest request,
@@ -26,7 +30,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         log.error(authException.getClass().getSimpleName(), authException.getMessage());
 
         CustomErrorResponse customErrorResponse = CustomErrorResponse.of(AUTH_AUTHENTICATION_FAILED);
-        String responseBody = new ObjectMapper().writeValueAsString(customErrorResponse);
+        String responseBody = objectMapper.writeValueAsString(customErrorResponse);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
