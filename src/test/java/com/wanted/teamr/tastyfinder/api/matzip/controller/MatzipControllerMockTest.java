@@ -59,7 +59,7 @@ public class MatzipControllerMockTest {
             MatzipResponse matzipResponse = MatzipResponse.builder()
                     .matzipId(matzipId)
                     .reviewList(reviewResponseList)
-                    .avgRating(3L).build();
+                    .avgRating(3).build();
             when(matzipService.getMatzip(matzipId)).thenReturn(matzipResponse);
 
             // when, then

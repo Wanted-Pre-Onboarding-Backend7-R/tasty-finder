@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MatzipRepository extends JpaRepository<Matzip, Long> {
 
-    @Query("SELECT r FROM Review r WHERE r.matzip.Id = :matzipId ORDER BY r.updatedAt DESC")
+    @Query("SELECT r FROM Review r WHERE r.matzip.id = :matzipId ORDER BY r.updatedAt DESC")
     List<Review> findReviewByMatzipIdOrderByModifiedAtDesc(@Param("matzipId") Long matzipId);
 
 }
