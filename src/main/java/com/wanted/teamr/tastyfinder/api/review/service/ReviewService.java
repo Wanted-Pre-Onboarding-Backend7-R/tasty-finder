@@ -22,7 +22,7 @@ public class ReviewService {
 
     @Transactional
     public ReviewResponse createReview(Member member, Long matzipId, ReviewRequest request) {
-        Matzip matzip = isPresentMatzip(matzipId);
+        Matzip matzip = getMatzipIfPresent(matzipId);
         Review review = Review.of(request, member, matzip);
         review = reviewRepository.save(review);
         matzip.updateTotalRating(review);
@@ -30,7 +30,7 @@ public class ReviewService {
         return ReviewResponse.of(review);
     }
 
-    public Matzip isPresentMatzip(Long matzipId) {
+    public Matzip getMatzipIfPresent(Long matzipId) {
         return matzipRepository.findById(matzipId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MATZIP_NOT_FOUND));
     }
