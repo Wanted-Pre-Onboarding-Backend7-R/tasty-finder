@@ -46,7 +46,7 @@ public class MatzipContollerTest {
     @Nested
     class GetMatzip {
 
-        @DisplayName("맛집 조회 시 맛집 상세 정보 응답을 보낸다.")
+        @DisplayName("맛집 조회 시 맛집 상세 정보 응답을 보낸다 - 평가 수정 시간 내림차순으로 정렬된다. ")
         @WithMockUser
         @Test
         void getMatzipFound() throws Exception {
@@ -78,8 +78,8 @@ public class MatzipContollerTest {
                     .andExpect(jsonPath("$.avgRating").value(3))
                     .andExpect(jsonPath("$.reviewList", hasSize(2)))
                     .andExpect(jsonPath("$.reviewList").isArray())
-                    .andExpect(jsonPath("$.reviewList[0].reviewId").value(review1.getId()))
-                    .andExpect(jsonPath("$.reviewList[1].reviewId").value(review2.getId()));
+                    .andExpect(jsonPath("$.reviewList[0].reviewId").value(review2.getId()))
+                    .andExpect(jsonPath("$.reviewList[1].reviewId").value(review1.getId()));
         }
 
         @DisplayName("맛집을 찾을 수 없을 때 에러 응답을 보낸다.")
