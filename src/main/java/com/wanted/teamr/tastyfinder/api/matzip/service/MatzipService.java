@@ -9,6 +9,7 @@ import com.wanted.teamr.tastyfinder.api.review.domain.Review;
 import com.wanted.teamr.tastyfinder.api.review.dto.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,15 @@ public class MatzipService {
 
     private final MatzipRepository matzipRepository;
 
+    @Transactional(readOnly = true)
     public MatzipResponse getMatzip(Long matzipId) {
-        Matzip matzip = isPresentMatzip(matzipId);
+        Matzip matzip = getMatzipIfPresent(matzipId);
         int avgRating = calculateAvgRating(matzip);
         List<ReviewResponse> responseList = getReviewResponseList(matzip);
         return MatzipResponse.of(matzip, avgRating, responseList);
     }
 
-    public Matzip isPresentMatzip(Long matzipId) {
+    public Matzip getMatzipIfPresent(Long matzipId) {
         return matzipRepository.findById(matzipId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MATZIP_NOT_FOUND));
     }
