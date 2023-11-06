@@ -1,5 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.matzip.domain;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+
+import com.wanted.teamr.tastyfinder.api.review.domain.Review;
+import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,11 +35,16 @@ public class Matzip {
 
     @Column(nullable = false)
     Long reviewCount;
+  
+    @OneToMany(mappedBy = "matzip", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
 
-    @Builder
-    private Matzip(Long totalRating, Long reviewCount) {
-        this.totalRating = totalRating;
-        this.reviewCount = reviewCount;
+    public void updateTotalRating(Review review) {
+        totalRating += review.getRating();
+    }
+
+    public void updateReviewCount() {
+        reviewCount += 1;
     }
 
     /**
@@ -44,7 +54,13 @@ public class Matzip {
      */
     public double calcDistanceFrom(Location requestLocation) {
         return tempMatzipRaw.location.distanceFrom(requestLocation);
+    } 
+  
+    @Builder
+    public Matzip(int totalRating, int reviewCount, List<Review> reviews) {
+        this.totalRating = totalRating;
+        this.reviewCount = reviewCount;
+        this.reviews = reviews;
     }
 
 }
-

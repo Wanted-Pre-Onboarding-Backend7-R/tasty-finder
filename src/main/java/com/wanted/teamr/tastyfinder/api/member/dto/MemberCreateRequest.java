@@ -9,10 +9,11 @@ import lombok.Getter;
 @Builder
 public class MemberCreateRequest {
 
-    @NotBlank
-    @Email(regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @NotBlank(message = "MEMBER_EMAIL_EMPTY")
+    @Email(message = "MEMBER_EMAIL_INVALID",
+            regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "MEMBER_PASSWORD_EMPTY")
     private String password;
 }

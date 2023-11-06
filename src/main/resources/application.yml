@@ -15,16 +15,22 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
 #  sql:
 #    init:
 #      mode: always
 #      data-locations: classpath:db/data.sql
-#  config:
-#    import: external-api-config.yml
+  config:
+    import:
+      - private/application-private.yml
+      - redis.yml
+      - sgg-csv-config.yml
 
 logging:
   level:
-    sql: trace
+    org.springframework.jdbc.core: info
 
-#jwt:
-#  secret: {jwt_key}
+security:
+  jwt:
+    secret-key:
+    expire-period: 3600000
