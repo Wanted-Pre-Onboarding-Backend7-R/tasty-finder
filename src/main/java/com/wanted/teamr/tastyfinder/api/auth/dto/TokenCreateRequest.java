@@ -9,10 +9,10 @@ import lombok.Getter;
 @Builder
 public class TokenCreateRequest {
 
-    @NotBlank
-    @Email(regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @NotBlank(message = "AUTH_EMAIL_EMPTY")
+    @Email(message = "AUTH_EMAIL_INVALID", regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     private final String email;
 
-    @NotBlank
+    @NotBlank(message = "AUTH_PASSWORD_EMPTY")
     private final String password;
 }
