@@ -1,17 +1,9 @@
 package com.wanted.teamr.tastyfinder.api.matzip.domain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-
 import com.wanted.teamr.tastyfinder.api.review.domain.Review;
+import com.wanted.teamr.tastyfinder.api.review.dto.ReviewRequest;
 import jakarta.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,12 +34,38 @@ public class Matzip {
     @OneToMany(mappedBy = "matzip", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
-    public void updateTotalRating(Review review) {
-        totalRating += review.getRating();
+    public void updateTotalRating(ReviewRequest request) {
+        totalRating += request.getRating();
     }
 
-    public void updateReviewCount() {
+    public void calculateTotalRating(Review review, ReviewRequest request) {
+        Long currentRating = review.getRating();
+        Long updatedRating = request.getRating();
+        if (currentRating > updatedRating) {
+            decreaseTotalRating(Math.abs(currentRating - updatedRating));
+        } else {
+            increaseTotalRating(Math.abs(updatedRating - currentRating));
+        }
+    }
+
+    public void increaseTotalRating(Long ratingValue) {
+        totalRating += ratingValue;
+    }
+
+    public void decreaseTotalRating(Long ratingValue) {
+        totalRating -= ratingValue;
+    }
+
+    public void decreaseTotalRating(Review review) {
+        totalRating -= review.getRating();
+    }
+
+    public void increaseReviewCount() {
         reviewCount += 1;
+    }
+
+    public void decreaseReviewCount() {
+        reviewCount -= 1;
     }
 
     /**

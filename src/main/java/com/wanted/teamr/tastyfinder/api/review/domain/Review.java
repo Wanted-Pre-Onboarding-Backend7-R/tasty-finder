@@ -51,4 +51,17 @@ public class Review  extends BaseTimeEntity {
                 .matzip(matzip).build();
     }
 
+    public void update(ReviewRequest request) {
+        updateRating(request.getRating());
+        updateContent(request.getContent());
+    }
+
+    public void updateRating(Long rating) {
+        this.rating = rating;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
 }

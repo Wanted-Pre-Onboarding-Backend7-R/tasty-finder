@@ -141,4 +141,58 @@ public class ReviewControllerTest {
 
     }
 
+    @DisplayName("평가 수정 API")
+    @Nested
+    class UpdateReview {
+
+        @DisplayName("평가를 수정할 수 있다.")
+        @Test
+        @WithUserDetails(value = "test@email.com", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        void createReview() throws Exception {
+            //given
+            Matzip matzip = Matzip.builder()
+                    .totalRating(0L)
+                    .reviewCount(0L).build();
+            Long matzipId = matzipRepository.save(matzip).getId();
+
+            ReviewRequest request = ReviewRequest.builder()
+                    .rating(5L)
+                    .content("맛있어요").build();
+
+            //when, then
+            mockMvc.perform(post(requestUri, matzipId)
+                            .accept(APPLICATION_JSON)
+                            .contentType(APPLICATION_JSON)
+                            .content(mapper.writeValueAsString(request)))
+                    .andDo(print())
+                    .andExpect(status().isCreated());
+
+        }
+
+        @DisplayName("별점 값 없이 평가를 작성할 수 없다.")
+        @Test
+        @WithUserDetails(value = "test@email.com", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        void createReviewFailedByRatingInvalid() throws Exception {
+            //given
+            Matzip matzip = Matzip.builder()
+                    .totalRating(0L)
+                    .reviewCount(0L).build();
+            Long matzipId = matzipRepository.save(matzip).getId();
+
+            ReviewRequest request = ReviewRequest.builder()
+                    .content("맛있어요").build();
+
+            //when, then
+            mockMvc.perform(post(requestUri, matzipId)
+                            .accept(APPLICATION_JSON)
+                            .contentType(APPLICATION_JSON)
+                            .content(mapper.writeValueAsString(request)))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.code").value(REVIEW_RATING_EMPTY.name()))
+                    .andExpect(jsonPath("$.message").value(REVIEW_RATING_EMPTY.getMessage()));
+        }
+
+    }
+
 }
