@@ -1,7 +1,11 @@
 package com.wanted.teamr.tastyfinder.api.member.service;
 
+import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+
+import com.wanted.teamr.tastyfinder.api.exception.CustomException;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
+import com.wanted.teamr.tastyfinder.api.member.dto.MemberGetResponse;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberUpdateRequest;
 import com.wanted.teamr.tastyfinder.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +32,14 @@ public class MemberService {
         member.update(memberUpdateRequest);
     }
 
+    @Transactional(readOnly = true)
+    public MemberGetResponse getMember(Long memberId) {
+        Member member = findMemberById(memberId);
+        return MemberGetResponse.of(member);
+    }
+
     private Member findMemberById(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                .orElseThrow(() -> new CustomException(MEMBER_NOT_EXISTS));
     }
 }

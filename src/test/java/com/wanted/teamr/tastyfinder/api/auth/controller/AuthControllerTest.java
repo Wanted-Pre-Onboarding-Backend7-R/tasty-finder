@@ -82,8 +82,8 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.code").value(MEMBER_NOT_EXISTS.name()));
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(AUTH_MEMBER_NOT_EXISTS.name()));
     }
 
     @Test
