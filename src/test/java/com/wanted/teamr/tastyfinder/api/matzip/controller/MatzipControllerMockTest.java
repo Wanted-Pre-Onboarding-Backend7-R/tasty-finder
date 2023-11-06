@@ -48,18 +48,18 @@ public class MatzipControllerMockTest {
             List<ReviewResponse> reviewResponseList = new ArrayList<>();
             ReviewResponse reviewResponse1 = ReviewResponse.builder()
                     .reviewId(1L)
-                    .rating(5)
+                    .rating(5L)
                     .content("맛있어요").build();
             ReviewResponse reviewResponse2 = ReviewResponse.builder()
                     .reviewId(2L)
-                    .rating(1)
+                    .rating(1L)
                     .content("맛없어요").build();
             reviewResponseList.add(reviewResponse1);
             reviewResponseList.add(reviewResponse2);
             MatzipResponse matzipResponse = MatzipResponse.builder()
                     .matzipId(matzipId)
                     .reviewList(reviewResponseList)
-                    .avgRating(3).build();
+                    .avgRating(3L).build();
             when(matzipService.getMatzip(matzipId)).thenReturn(matzipResponse);
 
             // when, then
@@ -88,7 +88,7 @@ public class MatzipControllerMockTest {
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.errorCode").value(ErrorCode.MATZIP_NOT_FOUND.name()))
+                    .andExpect(jsonPath("$.code").value(ErrorCode.MATZIP_NOT_FOUND.name()))
                     .andExpect(jsonPath("$.message").value(ErrorCode.MATZIP_NOT_FOUND.getMessage()));
         }
 

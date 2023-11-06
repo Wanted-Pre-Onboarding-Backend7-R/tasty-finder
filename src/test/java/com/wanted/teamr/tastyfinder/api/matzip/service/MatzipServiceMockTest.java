@@ -43,16 +43,16 @@ public class MatzipServiceMockTest {
             // given
             Long matzipId = 1L;
             Matzip matzip = Matzip.builder()
-                    .totalRating(6)
-                    .reviewCount(2).build();
+                    .totalRating(6L)
+                    .reviewCount(2L).build();
             List<Review> reviewResponseList = new ArrayList<>();
             Review review1 = Review.builder()
                     .matzip(matzip)
-                    .rating(5)
+                    .rating(5L)
                     .content("맛있어요").build();
             Review review2 = Review.builder()
                     .matzip(matzip)
-                    .rating(1)
+                    .rating(1L)
                     .content("맛없어요").build();
             reviewResponseList.add(review1);
             reviewResponseList.add(review2);
@@ -78,7 +78,7 @@ public class MatzipServiceMockTest {
             // when, then
             assertThatThrownBy(() -> matzipService.getMatzip(matzipId))
                     .isInstanceOf(CustomException.class)
-                    .extracting("errorCodeType")
+                    .extracting("errorCode")
                     .isEqualTo(ErrorCode.MATZIP_NOT_FOUND);
         }
 

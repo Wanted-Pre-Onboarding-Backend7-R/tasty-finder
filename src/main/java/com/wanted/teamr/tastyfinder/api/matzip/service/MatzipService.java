@@ -33,7 +33,7 @@ public class MatzipService {
     @Transactional(readOnly = true)
     public MatzipResponse getMatzip(Long matzipId) {
         Matzip matzip = getMatzipIfPresent(matzipId);
-        int avgRating = calculateAvgRating(matzip);
+        Long avgRating = calculateAvgRating(matzip);
         List<ReviewResponse> responseList = getReviewResponseList(matzip);
         return MatzipResponse.of(matzip, avgRating, responseList);
     }
@@ -43,7 +43,7 @@ public class MatzipService {
                 .orElseThrow(() -> new CustomException(ErrorCode.MATZIP_NOT_FOUND));
     }
 
-    public int calculateAvgRating(Matzip matzip) {
+    public Long calculateAvgRating(Matzip matzip) {
         return matzip.getTotalRating() / matzip.getReviewCount();
     }
 

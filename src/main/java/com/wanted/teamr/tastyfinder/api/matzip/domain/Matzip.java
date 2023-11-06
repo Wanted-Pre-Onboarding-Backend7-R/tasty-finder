@@ -17,6 +17,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -57,7 +60,7 @@ public class Matzip {
     } 
   
     @Builder
-    public Matzip(int totalRating, int reviewCount, List<Review> reviews) {
+    public Matzip(Long totalRating, Long reviewCount, List<Review> reviews) {
         this.totalRating = totalRating;
         this.reviewCount = reviewCount;
         this.reviews = reviews;

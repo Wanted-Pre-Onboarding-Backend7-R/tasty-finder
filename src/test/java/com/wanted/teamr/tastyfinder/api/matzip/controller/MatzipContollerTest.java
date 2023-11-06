@@ -52,17 +52,17 @@ public class MatzipContollerTest {
         void getMatzipFound() throws Exception {
             // given
             Matzip matzip = Matzip.builder()
-                    .totalRating(6)
-                    .reviewCount(2).build();
+                    .totalRating(6L)
+                    .reviewCount(2L).build();
             matzipRepository.save(matzip);
 
             Review review1 = Review.builder()
                     .matzip(matzip)
-                    .rating(4)
+                    .rating(4L)
                     .content("맛있어요").build();
             Review review2 = Review.builder()
                     .matzip(matzip)
-                    .rating(2)
+                    .rating(2L)
                     .content("맛없어요").build();
             reviewRepository.save(review1);
             reviewRepository.save(review2);
@@ -95,7 +95,7 @@ public class MatzipContollerTest {
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.errorCode").value(ErrorCode.MATZIP_NOT_FOUND.name()))
+                    .andExpect(jsonPath("$.code").value(ErrorCode.MATZIP_NOT_FOUND.name()))
                     .andExpect(jsonPath("$.message").value(ErrorCode.MATZIP_NOT_FOUND.getMessage()));
         }
 
