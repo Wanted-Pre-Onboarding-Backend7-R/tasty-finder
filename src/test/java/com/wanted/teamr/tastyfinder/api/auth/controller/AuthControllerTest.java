@@ -1,5 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.auth.controller;
 
+import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -81,7 +82,8 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value(MEMBER_NOT_EXISTS.name()));
     }
 
     @Test
@@ -98,7 +100,8 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value(AUTH_AUTHENTICATION_FAILED.name()));
     }
 
     @Test
@@ -114,7 +117,8 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(AUTH_EMAIL_EMPTY.name()));
     }
 
     @Test
@@ -130,6 +134,7 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(AUTH_PASSWORD_EMPTY.name()));
     }
 }
