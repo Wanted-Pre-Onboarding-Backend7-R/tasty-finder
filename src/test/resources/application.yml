@@ -10,15 +10,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  config:
-    import:
-      - redis.yml
-      - sgg-csv-config.yml
+#  config:
+#    import: external-api-config.yml
 
 #jwt:
 #  secret: {jwt_key}
-
-security:
-  jwt:
-    secret-key:
-    expire-period: 3600000
