@@ -28,7 +28,7 @@ public class MatzipSummaryReponse {
 
     public static MatzipSummaryReponse of(Matzip matzip, double distance) {
         return MatzipSummaryReponse.builder()
-                                   .name(matzip.getMatzipRow().getName())
+                                   .name(matzip.getTempMatzipRaw().getName())
                                    .distance(distance)
                                    .avgRating((double) matzip.getTotalRating() / matzip.getReviewCount())
                                    .build();

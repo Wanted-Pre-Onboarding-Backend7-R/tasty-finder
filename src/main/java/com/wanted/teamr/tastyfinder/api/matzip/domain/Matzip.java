@@ -1,7 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.matzip.domain;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +22,8 @@ public class Matzip {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "matzip_row_id")
-    MatzipRow matzipRow;
+    @JoinColumn(name = "temp_matzip_raw_id")
+    TempMatzipRaw tempMatzipRaw;
 
     @Column(nullable = false)
     Long totalRating;
@@ -44,7 +43,7 @@ public class Matzip {
      * @return 거리
      */
     public double calcDistanceFrom(Location requestLocation) {
-        return matzipRow.location.distanceFrom(requestLocation);
+        return tempMatzipRaw.location.distanceFrom(requestLocation);
     }
 
 }
