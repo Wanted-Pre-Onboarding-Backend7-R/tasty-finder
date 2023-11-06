@@ -1,6 +1,5 @@
 package com.wanted.teamr.tastyfinder.api.exception;
 
-
 import static org.springframework.http.HttpStatus.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
