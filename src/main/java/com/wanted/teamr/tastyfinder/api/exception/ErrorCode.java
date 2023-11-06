@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
-
+  
     AUTH_AUTHENTICATION_FAILED("인증에 실패하셨습니다.", UNAUTHORIZED),
     AUTH_AUTHORIZATION_FAILED("권한이 없습니다.", FORBIDDEN),
     AUTH_EMAIL_EMPTY("이메일이 없습니다.", BAD_REQUEST),
