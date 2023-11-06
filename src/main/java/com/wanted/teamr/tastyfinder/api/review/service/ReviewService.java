@@ -27,7 +27,7 @@ public class ReviewService {
         Matzip matzip = getMatzipIfPresent(matzipId);
         Review review = Review.of(request, member, matzip);
         review = reviewRepository.save(review);
-        matzip.updateTotalRating(request);
+        matzip.updateTotalRating(review);
         matzip.increaseReviewCount();
         return ReviewResponse.of(review);
     }
