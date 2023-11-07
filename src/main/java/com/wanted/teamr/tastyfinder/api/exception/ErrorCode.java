@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
+    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+    INPUT_VALUE_INVALID("입력 값이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
+    COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
+
     AUTH_AUTHENTICATION_FAILED("인증에 실패하셨습니다.", UNAUTHORIZED),
     AUTH_AUTHORIZATION_FAILED("권한이 없습니다.", FORBIDDEN),
     AUTH_EMAIL_EMPTY("이메일이 없습니다.", BAD_REQUEST),
@@ -21,6 +25,7 @@ public enum ErrorCode {
     AUTH_JWT_UNSUPPORTED("지원되지 않는 토큰입니다.", UNAUTHORIZED),
     AUTH_MEMBER_NOT_EXISTS("존재하지 않는 사용자입니다.", BAD_REQUEST),
     AUTH_PASSWORD_EMPTY("비밀번호가 없습니다.", BAD_REQUEST),
+
 
     MEMBER_NOT_EXISTS("존재하지 않는 사용자입니다.", BAD_REQUEST),
     MEMBER_EMAIL_EMPTY("이메일이 없습니다.", BAD_REQUEST),
@@ -39,5 +44,4 @@ public enum ErrorCode {
 
     private final String message;
     private final HttpStatus httpStatus;
-
 }
