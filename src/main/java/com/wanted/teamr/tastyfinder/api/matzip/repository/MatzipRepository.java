@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MatzipRepository extends JpaRepository<Matzip, Long> {
+public interface MatzipRepository extends JpaRepository<Matzip, Long>, MatzipRepositoryCustom {
 
     @Query("SELECT r FROM Review r WHERE r.matzip.id = :matzipId ORDER BY r.updatedAt DESC")
     List<Review> findReviewByMatzipIdOrderByModifiedAtDesc(@Param("matzipId") Long matzipId);

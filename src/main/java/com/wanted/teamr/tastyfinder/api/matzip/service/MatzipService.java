@@ -27,7 +27,7 @@ public class MatzipService {
         Location requestLocation = Location.of(request.getLat(), request.getLon());
         double range = Double.parseDouble(request.getRange());
         return request.getType()
-                      .retrieve(matzipRepository.findAll(), requestLocation, range);
+                      .retrieve(matzipRepository.retrieveMatzipList(request.getCategory()), requestLocation, range);
     }
   
     @Transactional(readOnly = true)
