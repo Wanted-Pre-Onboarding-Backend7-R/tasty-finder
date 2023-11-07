@@ -1,5 +1,8 @@
 package com.wanted.teamr.tastyfinder.api.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +36,21 @@ public class SpringDocConfig {
     @Bean(name = "apiDocPath")
     public String getApiDocPath() {
         return springDocConfigProperties.getApiDocs().getPath() + "/**";
+    }
+
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .components(new Components())
+                .info(apiInfo());
+    }
+
+    private Info apiInfo() {
+        return new Info()
+                .title("지리기반 맛집 추천 웹 서비스 API")
+                .description("본 서비스는 지리기반 맛집 추천 웹서비스입니다.</br>" +
+                        "사용자는 사용자 위치 기반으로 맛집을 추천 받고 해당 맛집의 상세 정보를 확인할 수 있습니다.")
+                .version("1.0.0");
     }
 
 }
