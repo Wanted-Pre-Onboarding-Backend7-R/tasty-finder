@@ -25,6 +25,7 @@ spring:
       - private/application-private.yml
       - redis.yml
       - sgg-csv-config.yml
+      - springdoc-config.yml
 
 logging:
   level:
