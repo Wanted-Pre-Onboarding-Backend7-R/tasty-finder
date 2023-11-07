@@ -1,7 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.matzip.domain;
 
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
-import com.wanted.teamr.tastyfinder.common.TriFunction;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,28 +13,29 @@ import java.util.stream.Collectors;
  */
 public enum MatzipListRetrieveType {
     // 거리 오름차순
-    DISTANCE((matzipList, location, range) -> matzipList.stream()
-                                                        .map(m -> MatzipSummaryReponse.of(m, m.calcDistanceFrom(location)))
-                                                        .filter(m -> m.getDistance() <= range)
-                                                        .sorted(Comparator.comparingDouble(MatzipSummaryReponse::getDistance))
-                                                        .collect(Collectors.toList())),
-    // 별점 내림차순
-    // TODO: 같은 평점일 때 2순위 비교 추가해야 될듯, 평점 같으면 -> 거리 가까운순
-    AVG_RATING((matzipList, location, range) -> matzipList.stream()
-                                                          .map(m -> MatzipSummaryReponse.of(m, m.calcDistanceFrom(location)))
-                                                          .filter(m -> m.getDistance() <= range)
-                                                          .sorted(Comparator.comparingDouble(MatzipSummaryReponse::getAvgRating).reversed())
-                                                          .collect(Collectors.toList()));
+    DISTANCE() {
+        @Override
+        public List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range) {
+            return matzipList.stream()
+                             .map(m -> MatzipSummaryReponse.of(m, m.calcDistanceFrom(requestLocation)))
+                             .filter(m -> m.getDistance() <= range)
+                             .sorted(Comparator.comparingDouble(MatzipSummaryReponse::getDistance))
+                             .collect(Collectors.toList());
+        }
+    },
+    // 평점 높은순
+    AVG_RATING() {
+        @Override
+        public List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range) {
+            return matzipList.stream()
+                             .map(m -> MatzipSummaryReponse.of(m, m.calcDistanceFrom(requestLocation)))
+                             .filter(m -> m.getDistance() <= range)
+                             .sorted(Comparator.comparingDouble(MatzipSummaryReponse::getAvgRating).reversed())
+                             .collect(Collectors.toList());
+        }
+    };
 
-    private TriFunction<List<Matzip>, Location, Double, List<MatzipSummaryReponse>> retrieveFunc;
-
-    MatzipListRetrieveType(TriFunction<List<Matzip>, Location, Double, List<MatzipSummaryReponse>> retrieveFunc) {
-        this.retrieveFunc = retrieveFunc;
-    }
-
-    public List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range) {
-        return retrieveFunc.apply(matzipList, requestLocation, range);
-    }
+    public abstract List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range);
 
 }
 
