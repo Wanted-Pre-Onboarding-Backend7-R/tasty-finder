@@ -25,6 +25,7 @@ spring:
       - private/application-private.yml
       - redis.yml
       - sgg-csv-config.yml
+      - matzip-page.yml
 
 logging:
   level:

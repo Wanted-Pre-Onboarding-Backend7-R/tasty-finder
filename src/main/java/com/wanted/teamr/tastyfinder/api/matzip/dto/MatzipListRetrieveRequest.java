@@ -21,14 +21,17 @@ public class MatzipListRetrieveRequest {
 
     private MatzipListRetrieveCategory category;
 
+    private Integer page;
+
     @Builder
     public MatzipListRetrieveRequest(String lat, String lon, String range, MatzipListRetrieveType type,
-                                     MatzipListRetrieveCategory category) {
+                                     MatzipListRetrieveCategory category, Integer page) {
         this.lat = lat;
         this.lon = lon;
         this.range = range;
         this.type = type == null ? MatzipListRetrieveType.DISTANCE : type;
         this.category = category == null ? MatzipListRetrieveCategory.ALL : category;
+        this.page = page == null ? 1 : page;
     }
 }
 
