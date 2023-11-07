@@ -1,10 +1,14 @@
 package com.wanted.teamr.tastyfinder.api.matzip.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
+import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveCategory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveType;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
 import com.wanted.teamr.tastyfinder.api.matzip.fixture.LocationFixture;
+import com.wanted.teamr.tastyfinder.api.matzip.repository.MatzipRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,10 +16,12 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -23,6 +29,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * <p>
@@ -92,13 +103,13 @@ class MatzipServiceMatzipListRetrieveTest {
         // given
         String range = "1.0";
         MatzipListRetrieveType type = MatzipListRetrieveType.DISTANCE;
-        List<String> expected = Arrays.asList("맛집 2", "맛집 1");
         MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
                                                                      .lat(requestLocation.getLat())
                                                                      .lon(requestLocation.getLon())
                                                                      .range(range)
                                                                      .type(type)
                                                                      .build();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 1");
 
         // when
         List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
@@ -117,13 +128,13 @@ class MatzipServiceMatzipListRetrieveTest {
         // given
         String range = "5.0";
         MatzipListRetrieveType type = MatzipListRetrieveType.DISTANCE;
-        List<String> expected = Arrays.asList("맛집 2", "맛집 1", "맛집 3", "맛집 5", "맛집 7", "맛집 6");
         MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
                                                                      .lat(requestLocation.getLat())
                                                                      .lon(requestLocation.getLon())
                                                                      .range(range)
                                                                      .type(type)
                                                                      .build();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 1", "맛집 3", "맛집 5", "맛집 7", "맛집 6");
 
         // when
         List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
@@ -142,16 +153,16 @@ class MatzipServiceMatzipListRetrieveTest {
         // given
         String range = "10.0";
         MatzipListRetrieveType type = MatzipListRetrieveType.DISTANCE;
-        List<String> expected = Arrays.asList(
-                "맛집 2", "맛집 1", "맛집 3", "맛집 5", "맛집 7",
-                "맛집 6", "맛집 4", "맛집 8", "맛집 11", "맛집 9"
-        );
         MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
                                                                      .lat(requestLocation.getLat())
                                                                      .lon(requestLocation.getLon())
                                                                      .range(range)
                                                                      .type(type)
                                                                      .build();
+        List<String> expected = Arrays.asList(
+                "맛집 2", "맛집 1", "맛집 3", "맛집 5", "맛집 7",
+                "맛집 6", "맛집 4", "맛집 8", "맛집 11", "맛집 9"
+        );
 
         // when
         List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
@@ -191,13 +202,13 @@ class MatzipServiceMatzipListRetrieveTest {
         // given
         String range = "1.0";
         MatzipListRetrieveType type = MatzipListRetrieveType.AVG_RATING;
-        List<String> expected = Arrays.asList("맛집 1", "맛집 2");
         MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
                                                                      .lat(requestLocation.getLat())
                                                                      .lon(requestLocation.getLon())
                                                                      .range(range)
                                                                      .type(type)
                                                                      .build();
+        List<String> expected = Arrays.asList("맛집 1", "맛집 2");
 
         // when
         List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
@@ -216,13 +227,13 @@ class MatzipServiceMatzipListRetrieveTest {
         // given
         String range = "5.0";
         MatzipListRetrieveType type = MatzipListRetrieveType.AVG_RATING;
-        List<String> expected = Arrays.asList("맛집 3", "맛집 7", "맛집 1", "맛집 2", "맛집 5", "맛집 6");
         MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
                                                                      .lat(requestLocation.getLat())
                                                                      .lon(requestLocation.getLon())
                                                                      .range(range)
                                                                      .type(type)
                                                                      .build();
+        List<String> expected = Arrays.asList("맛집 3", "맛집 7", "맛집 1", "맛집 2", "맛집 5", "맛집 6");
 
         // when
         List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
@@ -241,16 +252,16 @@ class MatzipServiceMatzipListRetrieveTest {
         // given
         String range = "10.0";
         MatzipListRetrieveType type = MatzipListRetrieveType.AVG_RATING;
-        List<String> expected = Arrays.asList(
-                "맛집 9", "맛집 3", "맛집 11", "맛집 7", "맛집 1",
-                "맛집 2", "맛집 4", "맛집 5", "맛집 6", "맛집 8"
-        );
         MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
                                                                      .lat(requestLocation.getLat())
                                                                      .lon(requestLocation.getLon())
                                                                      .range(range)
                                                                      .type(type)
                                                                      .build();
+        List<String> expected = Arrays.asList(
+                "맛집 9", "맛집 3", "맛집 11", "맛집 7", "맛집 1",
+                "맛집 2", "맛집 4", "맛집 5", "맛집 6", "맛집 8"
+        );
 
         // when
         List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
@@ -262,4 +273,191 @@ class MatzipServiceMatzipListRetrieveTest {
                                         .containsExactlyElementsOf(expected)
         );
     }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 거리순으로 카페만 조회한다")
+    void retrieveMatzipList_distance_5000m_cafe() {
+        // given
+        String range = "5.0";
+        MatzipListRetrieveType type = MatzipListRetrieveType.DISTANCE;
+        MatzipListRetrieveCategory category = MatzipListRetrieveCategory.CAFE;
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .type(type)
+                                                                     .category(category)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 5");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 거리순으로 일식만 조회한다")
+    void retrieveMatzipList_distance_5000m_jpn() {
+        // given
+        String range = "5.0";
+        MatzipListRetrieveType type = MatzipListRetrieveType.DISTANCE;
+        MatzipListRetrieveCategory category = MatzipListRetrieveCategory.JPN;
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .type(type)
+                                                                     .category(category)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 1", "맛집 3");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 거리순으로 중식만 조회한다")
+    void retrieveMatzipList_distance_5000m_chn() {
+        // given
+        String range = "5.0";
+        MatzipListRetrieveType type = MatzipListRetrieveType.DISTANCE;
+        MatzipListRetrieveCategory category = MatzipListRetrieveCategory.CHN;
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .type(type)
+                                                                     .category(category)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 7", "맛집 6");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 평점 순으로 카페만 조회한다")
+    void retrieveMatzipList_avgRating_5000m_cafe() {
+        // given
+        String range = "5.0";
+        MatzipListRetrieveType type = MatzipListRetrieveType.AVG_RATING;
+        MatzipListRetrieveCategory category = MatzipListRetrieveCategory.CAFE;
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .type(type)
+                                                                     .category(category)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 5");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 평점 순으로 일식만 조회한다")
+    void retrieveMatzipList_avgRating_5000m_jpn() {
+        // given
+        String range = "5.0";
+        MatzipListRetrieveType type = MatzipListRetrieveType.AVG_RATING;
+        MatzipListRetrieveCategory category = MatzipListRetrieveCategory.JPN;
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .type(type)
+                                                                     .category(category)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 3", "맛집 1");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 평점 순으로 중식만 조회한다")
+    void retrieveMatzipList_avgRating_5000m_chn() {
+        // given
+        String range = "5.0";
+        MatzipListRetrieveType type = MatzipListRetrieveType.AVG_RATING;
+        MatzipListRetrieveCategory category = MatzipListRetrieveCategory.CHN;
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .type(type)
+                                                                     .category(category)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 7", "맛집 6");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 2.0km 이내의 맛집 목록을 조회하면 기본으로 모든 음식점 종류에 대해 거리순으로 조회한다")
+    void retrieveMatzipList_range_2000m_default() throws Exception {
+        // given
+        String range = "2.0";
+        MatzipListRetrieveRequest request = MatzipListRetrieveRequest.builder()
+                                                                     .lat(requestLocation.getLat())
+                                                                     .lon(requestLocation.getLon())
+                                                                     .range(range)
+                                                                     .build();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 1", "맛집 3", "맛집 5");
+
+        // when
+        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+
+        // then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(expected.size()),
+                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                                        .containsExactlyElementsOf(expected)
+        );
+    }
+
 }
+
