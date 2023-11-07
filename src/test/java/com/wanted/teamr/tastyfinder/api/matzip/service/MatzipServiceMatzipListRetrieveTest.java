@@ -8,6 +8,7 @@ import com.wanted.teamr.tastyfinder.api.matzip.fixture.LocationFixture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
@@ -34,9 +35,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
  * 맛집과의 거리 distance와 몇 km 이내의 맛집 조회 조건 range는 "1.0" 와 같은 km 단위이나
  * 함수명으로 .을 표기할 수 없고 1_0 와 같은 형태도 애매하다고 생각해 meter로 표기함
  */
-@DisplayName("맛집 목록 조회 Service 통합 테스트")
 @Transactional
 @SpringBootTest
+@DisplayName("맛집 목록 조회 Service 통합 테스트")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MatzipServiceMatzipListRetrieveTest {
 
     @Autowired
