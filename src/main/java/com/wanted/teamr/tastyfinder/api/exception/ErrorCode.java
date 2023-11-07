@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
-    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
     INPUT_VALUE_INVALID("입력 값이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
-    COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
 
     AUTH_AUTHENTICATION_FAILED("인증에 실패하셨습니다.", UNAUTHORIZED),
     AUTH_AUTHORIZATION_FAILED("권한이 없습니다.", FORBIDDEN),
@@ -39,7 +37,7 @@ public enum ErrorCode {
     REVIEW_RATING_EMPTY("별점 값이 없습니다.", BAD_REQUEST),
     REVIEW_RATING_INVALID("별점 값이 유효하지 않습니다.", BAD_REQUEST),
 
-    COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
+    COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST)
     ;
 
     private final String message;
