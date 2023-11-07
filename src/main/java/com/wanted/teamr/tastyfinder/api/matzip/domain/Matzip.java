@@ -34,8 +34,26 @@ public class Matzip {
     @OneToMany(mappedBy = "matzip", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
-    public void updateTotalRating(Review review) {
+    public void create(Review review) {
+        increaseTotalRating(review);
+        increaseReviewCount();
+    }
+
+    public void update(Review review, ReviewRequest request) {
+        calculateTotalRating(review, request);
+    }
+
+    public void delete(Review review) {
+        decreaseTotalRating(review);
+        decreaseReviewCount();
+    }
+
+    public void increaseTotalRating(Review review) {
         totalRating += review.getRating();
+    }
+
+    public void increaseReviewCount() {
+        reviewCount += 1;
     }
 
     public void calculateTotalRating(Review review, ReviewRequest request) {
@@ -44,7 +62,7 @@ public class Matzip {
         if (currentRating > updatedRating) {
             decreaseTotalRating(Math.abs(currentRating - updatedRating));
         } else {
-            increaseTotalRating(Math.abs(updatedRating - currentRating));
+            increaseTotalRating(Math.abs(currentRating - updatedRating));
         }
     }
 
@@ -58,10 +76,6 @@ public class Matzip {
 
     public void decreaseTotalRating(Review review) {
         totalRating -= review.getRating();
-    }
-
-    public void increaseReviewCount() {
-        reviewCount += 1;
     }
 
     public void decreaseReviewCount() {

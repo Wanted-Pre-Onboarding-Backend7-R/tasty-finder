@@ -27,8 +27,7 @@ public class ReviewService {
         Matzip matzip = getMatzipIfPresent(matzipId);
         Review review = Review.of(request, member, matzip);
         review = reviewRepository.save(review);
-        matzip.updateTotalRating(review);
-        matzip.increaseReviewCount();
+        matzip.create(review);
         return ReviewResponse.of(review);
     }
 
@@ -36,7 +35,7 @@ public class ReviewService {
     public ReviewResponse updateReview(Member member, Long reviewId, ReviewRequest request) {
         Review review = getReviewIfPresent(reviewId);
         checkMember(member, review);
-        review.getMatzip().calculateTotalRating(review, request);
+        review.getMatzip().update(review, request);
         review.update(request);
         return ReviewResponse.of(review);
     }
@@ -45,8 +44,7 @@ public class ReviewService {
     public void deleteReview(Member member, Long reviewId) {
         Review review = getReviewIfPresent(reviewId);
         checkMember(member, review);
-        review.getMatzip().decreaseTotalRating(review);
-        review.getMatzip().decreaseReviewCount();
+        review.getMatzip().delete(review);
         reviewRepository.deleteById(review.getId());
     }
 

@@ -28,7 +28,7 @@ public class ReviewController {
     public ResponseEntity<ReviewResponse> updateReview(@AuthenticationPrincipal MemberAdapter memberAdapter, @PathVariable("reviewId") Long reviewId, @Valid @RequestBody ReviewRequest request) {
         Member member = memberAdapter.getMember();
         ReviewResponse reviewResponse = reviewService.updateReview(member, reviewId, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reviewResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(reviewResponse);
     }
 
     @DeleteMapping("/api/reviews/{reviewId}")
