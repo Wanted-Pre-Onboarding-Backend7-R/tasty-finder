@@ -10,17 +10,17 @@ import java.util.List;
 @Getter
 public class MatzipResponse {
     private final Long matzipId;
-    private final int avgRating;
+    private final double avgRating;
     private final List<ReviewResponse> reviewList;
 
     @Builder
-    public MatzipResponse(Long matzipId, int avgRating, List<ReviewResponse> reviewList) {
+    public MatzipResponse(Long matzipId, double avgRating, List<ReviewResponse> reviewList) {
         this.matzipId = matzipId;
         this.avgRating = avgRating;
         this.reviewList = reviewList;
     }
 
-    public static MatzipResponse of(Matzip matzip, int avgRating, List<ReviewResponse> reviewList) {
+    public static MatzipResponse of(Matzip matzip, double avgRating, List<ReviewResponse> reviewList) {
         return builder()
                 .matzipId(matzip.getId())
                 .avgRating(avgRating)

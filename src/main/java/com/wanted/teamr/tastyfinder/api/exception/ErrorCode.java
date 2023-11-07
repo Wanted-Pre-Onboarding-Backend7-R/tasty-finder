@@ -33,6 +33,13 @@ public enum ErrorCode {
     MEMBER_PASSWORD_EMPTY("비밀번호가 없습니다.", BAD_REQUEST),
     MEMBER_LATITUDE_INVALID("잘못된 위도입니다.", BAD_REQUEST),
     MEMBER_LONGITUDE_INVALID("잘못된 경도입니다.", BAD_REQUEST),
+
+    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", NOT_FOUND),
+
+    REVIEW_RATING_EMPTY("별점 값이 없습니다.", BAD_REQUEST),
+    REVIEW_RATING_INVALID("별점 값이 유효하지 않습니다.", BAD_REQUEST),
+
+    COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
     ;
 
     private final String message;
