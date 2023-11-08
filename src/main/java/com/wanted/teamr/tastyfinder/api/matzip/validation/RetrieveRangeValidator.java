@@ -32,3 +32,4 @@ public class RetrieveRangeValidator implements ConstraintValidator<RetrieveRange
         return MIN_RANGE.compareTo(range) <= 0 && range.compareTo(MAX_RANGE) <= 0;
     }
 }
+

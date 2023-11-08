@@ -1,14 +1,11 @@
 package com.wanted.teamr.tastyfinder.api.matzip.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveCategory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveType;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.matzip.fixture.LocationFixture;
-import com.wanted.teamr.tastyfinder.api.matzip.repository.MatzipRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,12 +13,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -31,9 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * <p>
@@ -90,7 +83,7 @@ class MatzipServiceMatzipListRetrieveTest {
                                                                      .build();
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertThat(result.size()).isEqualTo(0);
@@ -112,12 +105,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 2", "맛집 1");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(2),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -137,12 +130,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 2", "맛집 1", "맛집 3", "맛집 5", "맛집 7", "맛집 6");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -165,12 +158,12 @@ class MatzipServiceMatzipListRetrieveTest {
         );
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -189,7 +182,7 @@ class MatzipServiceMatzipListRetrieveTest {
                                                                      .build();
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertThat(result.size()).isEqualTo(0);
@@ -211,12 +204,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 1", "맛집 2");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(2),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -236,12 +229,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 3", "맛집 7", "맛집 1", "맛집 2", "맛집 5", "맛집 6");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -264,12 +257,12 @@ class MatzipServiceMatzipListRetrieveTest {
         );
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -291,12 +284,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 2", "맛집 5");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -318,12 +311,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 1", "맛집 3");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -345,12 +338,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 7", "맛집 6");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -372,12 +365,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 2", "맛집 5");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -399,12 +392,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 3", "맛집 1");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -426,12 +419,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 7", "맛집 6");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }
@@ -449,12 +442,12 @@ class MatzipServiceMatzipListRetrieveTest {
         List<String> expected = Arrays.asList("맛집 2", "맛집 1", "맛집 3", "맛집 5");
 
         // when
-        List<MatzipSummaryReponse> result = matzipService.retrieveMatzipList(request);
+        List<MatzipSummaryResponse> result = matzipService.retrieveMatzipList(request);
 
         // then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(expected.size()),
-                () -> assertThat(result).extracting(MatzipSummaryReponse::getName)
+                () -> assertThat(result).extracting(MatzipSummaryResponse::getName)
                                         .containsExactlyElementsOf(expected)
         );
     }

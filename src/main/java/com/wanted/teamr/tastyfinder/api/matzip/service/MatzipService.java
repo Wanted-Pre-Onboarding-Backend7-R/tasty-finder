@@ -2,7 +2,7 @@ package com.wanted.teamr.tastyfinder.api.matzip.service;
 
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.exception.CustomException;
 import com.wanted.teamr.tastyfinder.api.exception.ErrorCode;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Matzip;
@@ -28,7 +28,7 @@ public class MatzipService {
         this.pageSize = pageSize;
     }
 
-    public List<MatzipSummaryReponse> retrieveMatzipList(MatzipListRetrieveRequest request) {
+    public List<MatzipSummaryResponse> retrieveMatzipList(MatzipListRetrieveRequest request) {
         Location requestLocation = Location.of(request.getLat(), request.getLon());
         double range = Double.parseDouble(request.getRange());
         return request.getType()
@@ -64,3 +64,4 @@ public class MatzipService {
     }
 
 }
+

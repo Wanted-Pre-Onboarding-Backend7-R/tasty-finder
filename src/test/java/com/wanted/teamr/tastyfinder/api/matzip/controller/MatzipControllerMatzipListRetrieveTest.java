@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveCategory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveType;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.matzip.fixture.LocationFixture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -129,8 +129,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -156,8 +156,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -186,8 +186,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -232,8 +232,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -259,8 +259,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -289,8 +289,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -318,8 +318,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -347,8 +347,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -376,8 +376,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -405,8 +405,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -434,8 +434,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -463,8 +463,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
     
@@ -489,8 +489,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 

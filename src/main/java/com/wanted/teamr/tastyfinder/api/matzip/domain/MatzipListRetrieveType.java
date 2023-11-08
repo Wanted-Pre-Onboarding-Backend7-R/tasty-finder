@@ -1,14 +1,14 @@
 package com.wanted.teamr.tastyfinder.api.matzip.domain;
 
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -20,37 +20,36 @@ public enum MatzipListRetrieveType {
     // 거리 오름차순
     DISTANCE() {
         @Override
-        public List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range,
-                                                   int page, int pageSize) {
-            List<MatzipSummaryReponse> matzips
+        public List<MatzipSummaryResponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range,
+                                                    int page, int pageSize) {
+            List<MatzipSummaryResponse> matzips
                     = matzipList.stream()
-                                .map(m -> MatzipSummaryReponse.of(m, m.calcDistanceFrom(requestLocation)))
+                                .map(m -> MatzipSummaryResponse.of(m, requestLocation))
                                 .filter(m -> m.getDistance() <= range)
-                                .sorted(Comparator.comparingDouble(MatzipSummaryReponse::getDistance))
-                                .collect(Collectors.toList());
+                                .sorted(Comparator.comparingDouble(MatzipSummaryResponse::getDistance))
+                                .toList();
             return paging(matzips, page, pageSize);
         }
     },
     // 평점 높은순
     AVG_RATING() {
         @Override
-        public List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range,
-                                                   int page, int pageSize) {
-            List<MatzipSummaryReponse> matzips
+        public List<MatzipSummaryResponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range,
+                                                    int page, int pageSize) {
+            List<MatzipSummaryResponse> matzips
                     = matzipList.stream()
-                                .map(m -> MatzipSummaryReponse.of(m, m.calcDistanceFrom(requestLocation)))
+                                .map(m -> MatzipSummaryResponse.of(m, requestLocation))
                                 .filter(m -> m.getDistance() <= range)
-                                .sorted(Comparator.comparingDouble(MatzipSummaryReponse::getAvgRating)
-                                                  .reversed())
-                                .collect(Collectors.toList());
+                                .sorted(Comparator.comparingDouble(MatzipSummaryResponse::getAvgRating).reversed())
+                                .toList();
             return paging(matzips, page, pageSize);
         }
     };
 
-    public abstract List<MatzipSummaryReponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range,
-                                                        int page, int pageSize);
+    public abstract List<MatzipSummaryResponse> retrieve(List<Matzip> matzipList, Location requestLocation, double range,
+                                                         int page, int pageSize);
 
-    private static List<MatzipSummaryReponse> paging(List<MatzipSummaryReponse> matzips, int page, int pageSize) {
+    private static List<MatzipSummaryResponse> paging(List<MatzipSummaryResponse> matzips, int page, int pageSize) {
         // page 1부터 시작하기로 정해서 계산은 -1 처리
         int fromIndex = (page - 1) * pageSize;
         int toIndex = page * pageSize;

@@ -1,14 +1,12 @@
 package com.wanted.teamr.tastyfinder.api.matzip;
 
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Matzip;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
 import com.wanted.teamr.tastyfinder.api.matzip.repository.MatzipRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
