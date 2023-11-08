@@ -1,9 +1,9 @@
 package com.wanted.teamr.tastyfinder.api.auth.service;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_MEMBER_NOT_EXISTS;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.AUTH_MEMBER_NOT_EXISTS;
 
 import com.wanted.teamr.tastyfinder.api.auth.domain.MemberAdapter;
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.auth.controller;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -82,7 +82,7 @@ class AuthControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tokenCreateRequest)))
                 .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value(AUTH_MEMBER_NOT_EXISTS.name()));
     }
 

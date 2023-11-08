@@ -1,5 +1,6 @@
-package com.wanted.teamr.tastyfinder.api.exception;
+package com.wanted.teamr.tastyfinder.api.exception.dto;
 
+import com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 

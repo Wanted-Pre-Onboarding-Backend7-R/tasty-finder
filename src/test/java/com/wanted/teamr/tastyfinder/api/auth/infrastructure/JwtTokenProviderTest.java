@@ -1,11 +1,11 @@
 package com.wanted.teamr.tastyfinder.api.auth.infrastructure;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.wanted.teamr.tastyfinder.api.auth.dto.TokenCreateResponse;
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
 import com.wanted.teamr.tastyfinder.api.member.repository.MemberRepository;

@@ -1,8 +1,8 @@
 package com.wanted.teamr.tastyfinder.api.member.service;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.*;
 
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberGetResponse;

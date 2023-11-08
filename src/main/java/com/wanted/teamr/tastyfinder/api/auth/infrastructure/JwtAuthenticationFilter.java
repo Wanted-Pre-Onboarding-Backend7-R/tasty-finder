@@ -2,9 +2,9 @@ package com.wanted.teamr.tastyfinder.api.auth.infrastructure;
 
 import static com.wanted.teamr.tastyfinder.api.auth.infrastructure.JwtTokenProvider.CLAIMS_AUTH;
 import static com.wanted.teamr.tastyfinder.api.auth.infrastructure.JwtTokenProvider.GRANTTYPE_BEARER;
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_JWT_UNPRIVILEGED;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.AUTH_JWT_UNPRIVILEGED;
 
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

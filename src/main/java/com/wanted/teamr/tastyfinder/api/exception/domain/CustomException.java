@@ -1,4 +1,4 @@
-package com.wanted.teamr.tastyfinder.api.exception;
+package com.wanted.teamr.tastyfinder.api.exception.domain;
 
 import lombok.Getter;
 

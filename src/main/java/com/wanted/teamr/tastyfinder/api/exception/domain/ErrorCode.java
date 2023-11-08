@@ -1,4 +1,4 @@
-package com.wanted.teamr.tastyfinder.api.exception;
+package com.wanted.teamr.tastyfinder.api.exception.domain;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -13,6 +13,7 @@ public enum ErrorCode {
     MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
     INPUT_VALUE_INVALID("입력 값이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
     COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
+    COMMON_SERVER_ERROR("서버에서 에러가 발생하였습니다.", INTERNAL_SERVER_ERROR),
 
     AUTH_AUTHENTICATION_FAILED("인증에 실패하셨습니다.", UNAUTHORIZED),
     AUTH_AUTHORIZATION_FAILED("권한이 없습니다.", FORBIDDEN),
@@ -23,7 +24,7 @@ public enum ErrorCode {
     AUTH_JWT_INVALID("잘못된 토큰입니다.", UNAUTHORIZED),
     AUTH_JWT_UNPRIVILEGED("권한이 없는 토큰입니다.", FORBIDDEN),
     AUTH_JWT_UNSUPPORTED("지원되지 않는 토큰입니다.", UNAUTHORIZED),
-    AUTH_MEMBER_NOT_EXISTS("존재하지 않는 사용자입니다.", BAD_REQUEST),
+    AUTH_MEMBER_NOT_EXISTS("존재하지 않는 사용자입니다.", UNAUTHORIZED),
     AUTH_PASSWORD_EMPTY("비밀번호가 없습니다.", BAD_REQUEST),
 
 
@@ -35,13 +36,9 @@ public enum ErrorCode {
     MEMBER_LONGITUDE_INVALID("잘못된 경도입니다.", BAD_REQUEST),
     MEMBER_NOT_SAME("해당 작성자가 아닙니다.", BAD_REQUEST),
 
-    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", BAD_REQUEST),
-
     REVIEW_RATING_EMPTY("별점 값이 없습니다.", BAD_REQUEST),
     REVIEW_RATING_INVALID("별점 값이 유효하지 않습니다.", BAD_REQUEST),
     REVIEW_NOT_FOUND("리뷰가 존재하지 않습니다.", BAD_REQUEST),
-
-    COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
     ;
 
     private final String message;

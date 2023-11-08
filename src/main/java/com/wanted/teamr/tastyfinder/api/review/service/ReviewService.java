@@ -1,7 +1,7 @@
 package com.wanted.teamr.tastyfinder.api.review.service;
 
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
-import com.wanted.teamr.tastyfinder.api.exception.ErrorCode;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode;
 import com.wanted.teamr.tastyfinder.api.review.domain.Review;
 import com.wanted.teamr.tastyfinder.api.review.dto.ReviewRequest;
 import com.wanted.teamr.tastyfinder.api.review.dto.ReviewResponse;

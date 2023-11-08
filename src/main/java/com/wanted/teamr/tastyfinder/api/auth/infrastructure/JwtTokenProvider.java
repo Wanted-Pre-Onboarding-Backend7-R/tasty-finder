@@ -1,10 +1,10 @@
 package com.wanted.teamr.tastyfinder.api.auth.infrastructure;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.*;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 
 import com.wanted.teamr.tastyfinder.api.auth.dto.TokenCreateResponse;
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
