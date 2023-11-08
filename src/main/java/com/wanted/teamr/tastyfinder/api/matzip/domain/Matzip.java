@@ -1,17 +1,9 @@
 package com.wanted.teamr.tastyfinder.api.matzip.domain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-
 import com.wanted.teamr.tastyfinder.api.review.domain.Review;
+import com.wanted.teamr.tastyfinder.api.review.dto.ReviewRequest;
 import jakarta.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,12 +34,52 @@ public class Matzip {
     @OneToMany(mappedBy = "matzip", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
-    public void updateTotalRating(Review review) {
+    public void create(Review review) {
+        increaseTotalRating(review);
+        increaseReviewCount();
+    }
+
+    public void update(Review review, ReviewRequest request) {
+        calculateTotalRating(review, request);
+    }
+
+    public void delete(Review review) {
+        decreaseTotalRating(review);
+        decreaseReviewCount();
+    }
+
+    private void increaseTotalRating(Review review) {
         totalRating += review.getRating();
     }
 
-    public void updateReviewCount() {
+    private void increaseReviewCount() {
         reviewCount += 1;
+    }
+
+    private void calculateTotalRating(Review review, ReviewRequest request) {
+        Long currentRating = review.getRating();
+        Long updatedRating = request.getRating();
+        if (currentRating > updatedRating) {
+            decreaseTotalRating(Math.abs(currentRating - updatedRating));
+        } else {
+            increaseTotalRating(Math.abs(currentRating - updatedRating));
+        }
+    }
+
+    private void increaseTotalRating(Long ratingValue) {
+        totalRating += ratingValue;
+    }
+
+    private void decreaseTotalRating(Long ratingValue) {
+        totalRating -= ratingValue;
+    }
+
+    private void decreaseTotalRating(Review review) {
+        totalRating -= review.getRating();
+    }
+
+    private void decreaseReviewCount() {
+        reviewCount -= 1;
     }
 
     /**
