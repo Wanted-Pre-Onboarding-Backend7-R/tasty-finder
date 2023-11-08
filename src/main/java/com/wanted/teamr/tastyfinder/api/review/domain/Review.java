@@ -56,11 +56,11 @@ public class Review  extends BaseTimeEntity {
         updateContent(request.getContent());
     }
 
-    public void updateRating(Long rating) {
+    private void updateRating(Long rating) {
         this.rating = rating;
     }
 
-    public void updateContent(String content) {
+    private void updateContent(String content) {
         this.content = content;
     }
 

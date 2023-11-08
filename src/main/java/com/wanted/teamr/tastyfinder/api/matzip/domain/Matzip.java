@@ -48,15 +48,15 @@ public class Matzip {
         decreaseReviewCount();
     }
 
-    public void increaseTotalRating(Review review) {
+    private void increaseTotalRating(Review review) {
         totalRating += review.getRating();
     }
 
-    public void increaseReviewCount() {
+    private void increaseReviewCount() {
         reviewCount += 1;
     }
 
-    public void calculateTotalRating(Review review, ReviewRequest request) {
+    private void calculateTotalRating(Review review, ReviewRequest request) {
         Long currentRating = review.getRating();
         Long updatedRating = request.getRating();
         if (currentRating > updatedRating) {
@@ -66,19 +66,19 @@ public class Matzip {
         }
     }
 
-    public void increaseTotalRating(Long ratingValue) {
+    private void increaseTotalRating(Long ratingValue) {
         totalRating += ratingValue;
     }
 
-    public void decreaseTotalRating(Long ratingValue) {
+    private void decreaseTotalRating(Long ratingValue) {
         totalRating -= ratingValue;
     }
 
-    public void decreaseTotalRating(Review review) {
+    private void decreaseTotalRating(Review review) {
         totalRating -= review.getRating();
     }
 
-    public void decreaseReviewCount() {
+    private void decreaseReviewCount() {
         reviewCount -= 1;
     }
 
