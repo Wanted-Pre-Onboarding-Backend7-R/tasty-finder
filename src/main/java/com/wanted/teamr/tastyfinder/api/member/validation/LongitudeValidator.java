@@ -13,10 +13,16 @@ public class LongitudeValidator implements ConstraintValidator<Longitude, String
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (!StringUtils.hasText(value)) {
-            return true;
+            return false;
         }
 
-        BigDecimal longitude = new BigDecimal(value);
+        BigDecimal longitude;
+        try {
+            longitude = new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
         return longitude.compareTo(LONGITUDE_MAX) <= 0 && longitude.compareTo(LONGITUDE_MIN) >= 0;
     }
 }

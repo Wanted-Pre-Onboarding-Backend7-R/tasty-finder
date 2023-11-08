@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,13 @@ public class SggDataService {
     public void replaceAll(List<SggData> sggDataList) {
         sggDataRepository.deleteAll();
         sggDataRepository.saveAll(sggDataList);
+    }
+
+    public List<SggData> getSggDataList() {
+        List<SggData> sggData = new ArrayList<>();
+        Iterable<SggData> all = sggDataRepository.findAll();
+        all.forEach(sggData::add);
+        return sggData;
     }
 
 }

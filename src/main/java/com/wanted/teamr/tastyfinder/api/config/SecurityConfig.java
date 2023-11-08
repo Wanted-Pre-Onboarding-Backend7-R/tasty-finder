@@ -28,11 +28,17 @@ public class SecurityConfig {
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final AccessDeniedHandler accessDeniedHandler;
 
+    // SpringDocConfig의 Bean으로부터 받아오는 값
+    private final String swaggerPath;
+    private final String apiDocPath;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers(swaggerPath).permitAll()
+                        .requestMatchers(apiDocPath).permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))

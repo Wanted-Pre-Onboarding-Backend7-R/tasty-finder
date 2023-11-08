@@ -26,6 +26,7 @@ spring:
       - redis.yml
       - sgg-csv-config.yml
       - matzip-page.yml
+      - springdoc-config.yml
 
 logging:
   level:

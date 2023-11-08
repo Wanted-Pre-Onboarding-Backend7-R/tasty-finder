@@ -13,10 +13,16 @@ public class LatitudeValidator implements ConstraintValidator<Latitude, String> 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (!StringUtils.hasText(value)) {
-            return true;
+            return false;
         }
 
-        BigDecimal latitude = new BigDecimal(value);
+        BigDecimal latitude;
+        try {
+            latitude = new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
         return latitude.compareTo(LATITUDE_MAX) <= 0 && latitude.compareTo(LATITUDE_MIN) >= 0;
     }
 }

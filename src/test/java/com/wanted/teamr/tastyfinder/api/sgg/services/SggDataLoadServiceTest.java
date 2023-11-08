@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
+import org.springframework.context.annotation.Import;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 
-@SpringBootTest
+@DataRedisTest
+@Import(value = {SggDataLoadService.class, SggDataService.class})
 class SggDataLoadServiceTest {
 
     @Autowired
