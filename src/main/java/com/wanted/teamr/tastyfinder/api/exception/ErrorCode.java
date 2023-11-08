@@ -37,6 +37,8 @@ public enum ErrorCode {
     MATZIP_LIST_RETRIEVE_RANGE_INVALID("맛집 목록 조회 범위가 유효하지 않습니다.", BAD_REQUEST),
     MATZIP_LIST_RETRIEVE_TYPE_INVALID("맛집 목록 조회 타입이 유효하지 않습니다.", BAD_REQUEST),
     MATZIP_LIST_RETRIEVE_CATEGORY_INVALID("맛집 목록 조회 음식점 종류가 유효하지 않습니다.", BAD_REQUEST),
+    MATZIP_LIST_RETRIEVE_LATITUDE_INVALID("잘못된 위도입니다.", BAD_REQUEST),
+    MATZIP_LIST_RETRIEVE_LONGITUDE_INVALID("잘못된 경도입니다.", BAD_REQUEST),
 
     REVIEW_RATING_EMPTY("별점 값이 없습니다.", BAD_REQUEST),
     REVIEW_RATING_INVALID("별점 값이 유효하지 않습니다.", BAD_REQUEST),
