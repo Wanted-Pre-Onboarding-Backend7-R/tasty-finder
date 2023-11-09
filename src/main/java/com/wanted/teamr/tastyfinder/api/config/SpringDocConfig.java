@@ -25,7 +25,12 @@ public class SpringDocConfig {
      */
     @Bean(name = "swaggerPath")
     public String getSwaggerPath() {
-        return swaggerUiConfigProperties.getPath() + "/**";
+        return "/swagger-ui/**";
+    }
+
+    @Bean(name = "customSwaggerPath")
+    public String getCustomSwaggerPath() {
+        return swaggerUiConfigProperties.getPath();
     }
 
     /**
