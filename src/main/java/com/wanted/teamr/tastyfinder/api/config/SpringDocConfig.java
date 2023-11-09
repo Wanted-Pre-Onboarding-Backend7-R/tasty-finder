@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.properties.SpringDocConfigProperties;
+import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class SpringDocConfig {
 
     private final SpringDocConfigProperties springDocConfigProperties;
+    private final SwaggerUiConfigProperties swaggerUiConfigProperties;
 
     /**
      * swagger ui 웹 페이지 주소: /swagger-ui/index.html
@@ -24,6 +26,11 @@ public class SpringDocConfig {
     @Bean(name = "swaggerPath")
     public String getSwaggerPath() {
         return "/swagger-ui/**";
+    }
+
+    @Bean(name = "customSwaggerPath")
+    public String getCustomSwaggerPath() {
+        return swaggerUiConfigProperties.getPath();
     }
 
     /**

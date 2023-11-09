@@ -30,6 +30,7 @@ public class SecurityConfig {
 
     // SpringDocConfig의 Bean으로부터 받아오는 값
     private final String swaggerPath;
+    private final String customSwaggerPath;
     private final String apiDocPath;
 
     @Bean
@@ -38,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(swaggerPath).permitAll()
+                        .requestMatchers(customSwaggerPath).permitAll()
                         .requestMatchers(apiDocPath).permitAll()
                         .anyRequest().authenticated()
                 )
