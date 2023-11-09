@@ -2,7 +2,7 @@ package com.wanted.teamr.tastyfinder.api.matzip.service;
 
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.exception.CustomException;
 import com.wanted.teamr.tastyfinder.api.exception.ErrorCode;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Matzip;
@@ -10,7 +10,7 @@ import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipResponse;
 import com.wanted.teamr.tastyfinder.api.matzip.repository.MatzipRepository;
 import com.wanted.teamr.tastyfinder.api.review.domain.Review;
 import com.wanted.teamr.tastyfinder.api.review.dto.ReviewResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MatzipService {
 
     private final MatzipRepository matzipRepository;
+    private final int pageSize;
 
-    public List<MatzipSummaryReponse> retrieveMatzipList(MatzipListRetrieveRequest request) {
+    public MatzipService(MatzipRepository matzipRepository, @Value("${matzip.page.size}") int pageSize) {
+        this.matzipRepository = matzipRepository;
+        this.pageSize = pageSize;
+    }
+
+    public List<MatzipSummaryResponse> retrieveMatzipList(MatzipListRetrieveRequest request) {
         Location requestLocation = Location.of(request.getLat(), request.getLon());
         double range = Double.parseDouble(request.getRange());
         return request.getType()
-                      .retrieve(matzipRepository.findAll(), requestLocation, range);
+                      .retrieve(matzipRepository.retrieveMatzipList(request.getCategory()), requestLocation,
+                              range, request.getPage(), pageSize);
     }
   
     @Transactional(readOnly = true)
@@ -58,3 +64,4 @@ public class MatzipService {
     }
 
 }
+

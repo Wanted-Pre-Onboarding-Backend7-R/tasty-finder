@@ -3,8 +3,9 @@ package com.wanted.teamr.tastyfinder.api.matzip.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
+import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveCategory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveType;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.matzip.fixture.LocationFixture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -45,11 +46,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * 맛집과의 거리 distance와 몇 km 이내의 맛집 조회 조건 range는 "1.0" 와 같은 km 단위이나
  * 함수명으로 .을 표기할 수 없고 1_0 와 같은 형태도 애매하다고 생각해 meter로 표기함
  */
-@DisplayName("맛집 목록 조회 API 통합 테스트")
-@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 @Transactional
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@DisplayName("맛집 목록 조회 API 통합 테스트")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MatzipControllerMatzipListRetrieveTest {
 
     @Autowired
@@ -64,6 +65,7 @@ class MatzipControllerMatzipListRetrieveTest {
     private final String LONGITUDE = "lon";
     private final String RANGE = "range";
     private final String RETRIEVE_TYPE = "type";
+    private final String CATEGORY = "category";
 
     // 시군구 데이터 성남시
     private final Location requestLocation = LocationFixture.LOCATION_SEONG_NAM;
@@ -127,8 +129,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -154,8 +156,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -184,8 +186,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -230,8 +232,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -257,8 +259,8 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
 
@@ -287,9 +289,210 @@ class MatzipControllerMatzipListRetrieveTest {
                                      .getResponse()
                                      .getContentAsString(StandardCharsets.UTF_8);
 
-        List<MatzipSummaryReponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
-        assertThat(resMatzipList).extracting(MatzipSummaryReponse::getName)
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
                                  .containsExactlyElementsOf(expected);
     }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 거리순으로 카페만 조회한다")
+    void retrieveMatzipList_distance_5000m_cafe() throws Exception {
+        // given
+        String range = "5.0";
+        String type = MatzipListRetrieveType.DISTANCE.name();
+        String category = MatzipListRetrieveCategory.CAFE.name();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 5");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RETRIEVE_TYPE, type)
+                                             .param(CATEGORY, category)
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 거리순으로 일식만 조회한다")
+    void retrieveMatzipList_distance_5000m_jpn() throws Exception {
+        // given
+        String range = "5.0";
+        String type = MatzipListRetrieveType.DISTANCE.name();
+        String category = MatzipListRetrieveCategory.JPN.name();
+        List<String> expected = Arrays.asList("맛집 1", "맛집 3");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RETRIEVE_TYPE, type)
+                                             .param(CATEGORY, category)
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 거리순으로 중식만 조회한다")
+    void retrieveMatzipList_distance_5000m_chn() throws Exception {
+        // given
+        String range = "5.0";
+        String type = MatzipListRetrieveType.DISTANCE.name();
+        String category = MatzipListRetrieveCategory.CHN.name();
+        List<String> expected = Arrays.asList("맛집 7", "맛집 6");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RETRIEVE_TYPE, type)
+                                             .param(CATEGORY, category)
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 평점 순으로 카페만 조회한다")
+    void retrieveMatzipList_avgRating_5000m_cafe() throws Exception {
+        // given
+        String range = "5.0";
+        String type = MatzipListRetrieveType.AVG_RATING.name();
+        String category = MatzipListRetrieveCategory.CAFE.name();
+        List<String> expected = Arrays.asList("맛집 2", "맛집 5");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RETRIEVE_TYPE, type)
+                                             .param(CATEGORY, category)
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 평점 순으로 일식만 조회한다")
+    void retrieveMatzipList_avgRating_5000m_jpn() throws Exception {
+        // given
+        String range = "5.0";
+        String type = MatzipListRetrieveType.AVG_RATING.name();
+        String category = MatzipListRetrieveCategory.JPN.name();
+        List<String> expected = Arrays.asList("맛집 3", "맛집 1");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RETRIEVE_TYPE, type)
+                                             .param(CATEGORY, category)
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    @DisplayName("요청 위치 주변 5.0km 이내의 맛집 목록을 평점 순으로 중식만 조회한다")
+    void retrieveMatzipList_avgRating_5000m_chn() throws Exception {
+        // given
+        String range = "5.0";
+        String type = MatzipListRetrieveType.AVG_RATING.name();
+        String category = MatzipListRetrieveCategory.CHN.name();
+        List<String> expected = Arrays.asList("맛집 7", "맛집 6");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RETRIEVE_TYPE, type)
+                                             .param(CATEGORY, category)
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+    
+
+    @Test
+    @DisplayName("요청 위치 주변 2.0km 이내의 맛집 목록을 조회하면 기본으로 모든 음식점 종류에 대해 거리순으로 조회한다")
+    void retrieveMatzipList_range_2000m_default() throws Exception {
+        // given
+        String range = "2.0";
+        List<String> expected = Arrays.asList("맛집 2", "맛집 1", "맛집 3", "맛집 5");
+
+        // when, then
+        String responseBody = mockMvc.perform(get(url)
+                                             .param(LATITUDE, requestLocation.getLat())
+                                             .param(LONGITUDE, requestLocation.getLon())
+                                             .param(RANGE, range))
+                                     .andDo(print())
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                     .andExpect(jsonPath("$.length()").value(expected.size()))
+                                     .andReturn()
+                                     .getResponse()
+                                     .getContentAsString(StandardCharsets.UTF_8);
+
+        List<MatzipSummaryResponse> resMatzipList = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        assertThat(resMatzipList).extracting(MatzipSummaryResponse::getName)
+                                 .containsExactlyElementsOf(expected);
+    }
+
 }
 

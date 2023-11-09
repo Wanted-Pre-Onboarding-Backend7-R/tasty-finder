@@ -2,7 +2,7 @@ package com.wanted.teamr.tastyfinder.api.matzip.controller;
 
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipResponse;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.matzip.service.MatzipService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class MatzipController {
     private final MatzipService matzipService;
   
     @GetMapping("/api/matzips")
-    public ResponseEntity<List<MatzipSummaryReponse>> retrieveMatzipList(@ModelAttribute @Valid MatzipListRetrieveRequest request) {
-        List<MatzipSummaryReponse> response = matzipService.retrieveMatzipList(request);
+    public ResponseEntity<List<MatzipSummaryResponse>> retrieveMatzipList(@ModelAttribute @Valid MatzipListRetrieveRequest request) {
+        List<MatzipSummaryResponse> response = matzipService.retrieveMatzipList(request);
         return ResponseEntity.ok(response);
     }
 

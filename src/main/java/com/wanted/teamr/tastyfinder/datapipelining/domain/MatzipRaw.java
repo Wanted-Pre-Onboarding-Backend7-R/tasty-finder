@@ -1,5 +1,6 @@
 package com.wanted.teamr.tastyfinder.datapipelining.domain;
 
+import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.datapipelining.dto.OpenAPIStoreRow;
 import jakarta.persistence.*;
 import lombok.*;
@@ -63,10 +64,8 @@ public class MatzipRaw {
     private String refineRoadnmAddr;
     @Column(name = "REFINE_ZIP_CD", length = 6)
     private String refineZipCd;
-    @Column(name = "REFINE_WGS84_LOGT", length = 20, nullable = false)
-    private String refineWgs84Logt;
-    @Column(name = "REFINE_WGS84_LAT", length = 20, nullable = false)
-    private String refineWgs84Lat;
+    @Embedded
+    Location location;
 
     @Builder
     private MatzipRaw(String sigunNm, String sigunCd, String bizplcNm, String licensgDe, String bsnStateNm,
@@ -74,7 +73,7 @@ public class MatzipRaw {
                       String multiUseBizestblYn, String gradDivNm, String totFacltScale, Integer femaleEnflpsnCnt,
                       String bsnsiteCircumfrDivNm, String sanittnIndutypeNm, String sanittnBizcondNm,
                       Integer totEmplyCnt, String refineLotnoAddr, String refineRoadnmAddr, String refineZipCd,
-                      String refineWgs84Logt, String refineWgs84Lat) {
+                      Location location) {
         this.bizNameLotNoAddr = bizplcNm + refineLotnoAddr;
         this.sigunNm = sigunNm;
         this.sigunCd = sigunCd;
@@ -97,8 +96,7 @@ public class MatzipRaw {
         this.refineLotnoAddr = refineLotnoAddr;
         this.refineRoadnmAddr = refineRoadnmAddr;
         this.refineZipCd = refineZipCd;
-        this.refineWgs84Logt = refineWgs84Logt;
-        this.refineWgs84Lat = refineWgs84Lat;
+        this.location = location;
     }
 
     public static MatzipRaw from(OpenAPIStoreRow row) {
@@ -124,8 +122,7 @@ public class MatzipRaw {
                 .refineLotnoAddr(row.getRefineLotnoAddr())
                 .refineRoadnmAddr(row.getRefineRoadnmAddr())
                 .refineZipCd(row.getRefineZipCd())
-                .refineWgs84Logt(row.getRefineWgs84Logt())
-                .refineWgs84Lat(row.getRefineWgs84Lat())
+                .location(Location.of(row.getRefineWgs84Lat(), row.getRefineWgs84Logt()))
                 .build();
     }
 
