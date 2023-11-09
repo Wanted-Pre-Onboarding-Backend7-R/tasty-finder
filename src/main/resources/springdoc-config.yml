@@ -7,5 +7,6 @@ springdoc:
     disable-swagger-default-url: true
     path: /swagger-ui
     try-it-out-enabled: true
+    display-request-duration: true
   paths-to-match:
     - /api/**
