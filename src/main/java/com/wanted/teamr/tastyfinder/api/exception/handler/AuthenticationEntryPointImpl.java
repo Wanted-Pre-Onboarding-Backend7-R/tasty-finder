@@ -1,8 +1,9 @@
-package com.wanted.teamr.tastyfinder.api.exception;
+package com.wanted.teamr.tastyfinder.api.exception.handler;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_AUTHENTICATION_FAILED;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.AUTH_AUTHENTICATION_FAILED;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wanted.teamr.tastyfinder.api.exception.dto.CustomErrorResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

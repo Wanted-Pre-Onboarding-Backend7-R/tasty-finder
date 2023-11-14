@@ -3,8 +3,8 @@ package com.wanted.teamr.tastyfinder.api.matzip.service;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
-import com.wanted.teamr.tastyfinder.api.exception.ErrorCode;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Matzip;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipResponse;
 import com.wanted.teamr.tastyfinder.api.matzip.repository.MatzipRepository;
@@ -35,7 +35,7 @@ public class MatzipService {
                       .retrieve(matzipRepository.retrieveMatzipList(request.getCategory()), requestLocation,
                               range, request.getPage(), pageSize);
     }
-  
+
     @Transactional(readOnly = true)
     public MatzipResponse getMatzip(Long matzipId) {
         Matzip matzip = getMatzipIfPresent(matzipId);

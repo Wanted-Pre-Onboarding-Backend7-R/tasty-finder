@@ -1,6 +1,6 @@
 package com.wanted.teamr.tastyfinder.api.member.controller;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.*;
 import static com.wanted.teamr.tastyfinder.api.member.domain.Role.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

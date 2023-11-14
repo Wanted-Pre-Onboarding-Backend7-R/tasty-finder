@@ -1,16 +1,20 @@
-package com.wanted.teamr.tastyfinder.api.exception;
+package com.wanted.teamr.tastyfinder.api.exception.handler;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.*;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.*;
 import static org.springframework.boot.web.servlet.server.Encoding.DEFAULT_CHARSET;
 import static org.springframework.http.HttpHeaders.CONTENT_ENCODING;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode;
+import com.wanted.teamr.tastyfinder.api.exception.dto.CustomErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,7 +38,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CustomErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         logError(e);
         String firstErrorMessage = getFirstErrorMessage(e);
-        ErrorCode errorCode = errorMessageToErrorCode(firstErrorMessage);
+        ErrorCode errorCode = errorMessageToErrorCode(firstErrorMessage, COMMON_INVALID_PARAMETER);
         return createResponseEntity(errorCode);
     }
 
@@ -44,11 +48,35 @@ public class GlobalExceptionHandler {
         return createResponseEntity(BAD_REQUEST, null, e.getMessage());
     }
 
-    private ErrorCode errorMessageToErrorCode(String errorMessage) {
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<CustomErrorResponse> handleNumberFormatException(NumberFormatException e) {
+        logError(e);
+        return createResponseEntity(BAD_REQUEST, null, e.getMessage());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<CustomErrorResponse> handleAuthenticationException(AuthenticationException e) {
+        logError(e);
+        if (e.getCause() instanceof CustomException customException) {
+            return createResponseEntity(customException.getErrorCode());
+        }
+        return createResponseEntity(AUTH_AUTHENTICATION_FAILED);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<CustomErrorResponse> handleException(Exception e) {
+        logError(e);
+        if (e.getCause() instanceof CustomException customException) {
+            return createResponseEntity(customException.getErrorCode());
+        }
+        return createResponseEntity(INTERNAL_SERVER_ERROR, COMMON_SERVER_ERROR.name(), e.getMessage());
+    }
+
+    private ErrorCode errorMessageToErrorCode(String errorMessage, ErrorCode defaultErrorCode) {
         try {
-            return valueOf(errorMessage);
+            return ErrorCode.valueOf(errorMessage);
         } catch (IllegalArgumentException | NullPointerException ex) {
-            return COMMON_INVALID_PARAMETER;
+            return defaultErrorCode;
         }
     }
 

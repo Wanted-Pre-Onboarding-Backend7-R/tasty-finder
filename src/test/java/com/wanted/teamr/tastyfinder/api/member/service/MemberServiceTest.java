@@ -1,12 +1,12 @@
 package com.wanted.teamr.tastyfinder.api.member.service;
 
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.AUTH_MEMBER_NOT_EXISTS;
-import static com.wanted.teamr.tastyfinder.api.exception.ErrorCode.MEMBER_NOT_EXISTS;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.AUTH_MEMBER_NOT_EXISTS;
+import static com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode.MEMBER_NOT_EXISTS;
 import static com.wanted.teamr.tastyfinder.api.member.domain.Role.ROLE_ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.wanted.teamr.tastyfinder.api.exception.CustomException;
+import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import com.wanted.teamr.tastyfinder.api.member.domain.Member;
 import com.wanted.teamr.tastyfinder.api.member.domain.Role;
 import com.wanted.teamr.tastyfinder.api.member.dto.MemberCreateRequest;
