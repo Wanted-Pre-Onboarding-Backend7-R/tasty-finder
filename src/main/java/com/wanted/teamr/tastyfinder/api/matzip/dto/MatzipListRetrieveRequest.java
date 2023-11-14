@@ -1,12 +1,14 @@
 package com.wanted.teamr.tastyfinder.api.matzip.dto;
 
+import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveCategory;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.MatzipListRetrieveType;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-
-// TODO: request dto validation
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MatzipListRetrieveRequest {
 
     private String lat;
@@ -17,12 +19,19 @@ public class MatzipListRetrieveRequest {
 
     private MatzipListRetrieveType type;
 
+    private MatzipListRetrieveCategory category;
+
+    private Integer page;
+
     @Builder
-    private MatzipListRetrieveRequest(String lat, String lon, String range, MatzipListRetrieveType type) {
+    public MatzipListRetrieveRequest(String lat, String lon, String range, MatzipListRetrieveType type,
+                                     MatzipListRetrieveCategory category, Integer page) {
         this.lat = lat;
         this.lon = lon;
         this.range = range;
-        this.type = type;
+        this.type = type == null ? MatzipListRetrieveType.DISTANCE : type;
+        this.category = category == null ? MatzipListRetrieveCategory.ALL : category;
+        this.page = page == null ? 1 : page;
     }
 }
 

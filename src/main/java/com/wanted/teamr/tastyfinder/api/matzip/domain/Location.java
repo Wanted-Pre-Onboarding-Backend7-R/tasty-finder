@@ -12,12 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
 
-    @Column(name = "REFINE_WGS84_LAT", nullable = false)
+    @Column(name = "REFINE_WGS84_LAT", length = 20, nullable = false)
     String lat;
 
-    @Column(name = "REFINE_WGS84_LOGT", nullable = false)
+    @Column(name = "REFINE_WGS84_LOGT", length = 20, nullable = false)
     String lon;
-
 
     @Builder
     private Location(String lat, String lon) {
