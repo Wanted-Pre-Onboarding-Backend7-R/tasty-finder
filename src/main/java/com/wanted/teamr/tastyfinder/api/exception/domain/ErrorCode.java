@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
-    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
-    INPUT_VALUE_INVALID("입력 값이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
+    INPUT_VALUE_INVALID("입력 값이 유효하지 않습니다.", BAD_REQUEST),
     COMMON_INVALID_PARAMETER("잘못된 파라미터입니다.", BAD_REQUEST),
     COMMON_SERVER_ERROR("서버에서 에러가 발생하였습니다.", INTERNAL_SERVER_ERROR),
 
@@ -36,7 +35,7 @@ public enum ErrorCode {
     MEMBER_LONGITUDE_INVALID("잘못된 경도입니다.", BAD_REQUEST),
     MEMBER_NOT_SAME("해당 작성자가 아닙니다.", BAD_REQUEST),
 
-    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", BAD_REQUEST),
+    MATZIP_NOT_FOUND("맛집 게시물이 존재하지 않습니다.", NOT_FOUND),
     MATZIP_LIST_RETRIEVE_PAGE_NUM_INVALID("맛집 목록 조회 페이지 번호가 유효하지 않습니다.", BAD_REQUEST),
     MATZIP_LIST_RETRIEVE_RANGE_INVALID("맛집 목록 조회 범위가 유효하지 않습니다.", BAD_REQUEST),
     MATZIP_LIST_RETRIEVE_TYPE_INVALID("맛집 목록 조회 타입이 유효하지 않습니다.", BAD_REQUEST),

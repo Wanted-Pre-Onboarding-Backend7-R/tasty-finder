@@ -2,7 +2,7 @@ package com.wanted.teamr.tastyfinder.api.matzip.service;
 
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Location;
 import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipListRetrieveRequest;
-import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryReponse;
+import com.wanted.teamr.tastyfinder.api.matzip.dto.MatzipSummaryResponse;
 import com.wanted.teamr.tastyfinder.api.exception.domain.CustomException;
 import com.wanted.teamr.tastyfinder.api.exception.domain.ErrorCode;
 import com.wanted.teamr.tastyfinder.api.matzip.domain.Matzip;
